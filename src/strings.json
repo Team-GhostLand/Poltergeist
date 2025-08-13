@@ -1,0 +1,62 @@
+{
+    "WORKDIR": "!!!PLEASE CHANGE ME!!! An absolute path to the working directory. It must contain the following: .env (derived from this file), data (logs + first-run note + must include a base.db file derived from prisma/placeholder_database.db), node_modules + pnpm-lock.yaml (libraries), and dist (generated Siedemnastkobot binaries).",
+    
+    
+    
+    "logs_logger_startup": "---------- NEW LOGGING SESSION ----------",
+    "logs_logger_webhook_error": "BEWARE: The error above has not been logged as a webhook. Please check your .env (LOGGER_WEBHOOK), Internet connection, or whatever else webhooks need.",
+    
+    "logs_startup": "Bootin' 'er up!",
+    "logs_startup_done": " is ready to use!",
+    
+    "logs_no_workdir": "CRITICAL STARTUP ERROR: WORKDIR NOT FOUND!!!",
+    "logs_no_token": "No token has been provided! The bot will now exit.",
+    
+    "logs_registry_commands_begin": "Registering commands - working directory: ",
+    "logs_registry_commands_found": "Registered command: ",
+    "logs_registry_events_begin": "Registering events - working directory: ",
+    "logs_registry_events_found": "Registered event: ",
+    "logs_registry_interactions_begin": "Registering interactions - working directory: ",
+    "logs_registry_interactions_found": "Registered interaction: ",
+    
+    "logs_commands_removing": "Removing commands...",
+    "logs_commands_removed": "Commands removed successfully! Boot the bot with the --deploy-commands flag to deploy them again.",
+    "logs_commands_adding": "Deploying commands...",
+    "logs_commands_added": "Commands deployed successfully! They can be removed with the --remove-commands flag.",
+    "logs_commands_conflict": "You can't add and remove commands at the same time!",
+    "logs_commands_hint": "HINT: If you want your commands to be available in Discord, boot the bot with --deploy-commands. The bot will now exit - it's up to you to reboot it, with or without command support. This message will NOT be displayed again.",
+    
+    "logs_stop_cmd": "Bot has been stopped using a command by ",
+    "logs_error": "An unexpected error occured and the bot has crashed. Check errors.txt file for more details.",
+    "logs_error_fatal": "An unexpected error occured! Check errors.txt file for more details.",
+    
+    
+    "verify_panel_header": "Więc... Pewnie zastanawiasz się, czemu nie możesz pisać, hm?",
+    "verify_panel_content": "✅  __**Aby uzyskać dostęp do serwera, musisz się zweryfikować!**__  ✅\n\n*Hej! Nazywam się <@1148294664894546030> i razem z <@282859044593598464> oraz <@&1018141209761423420>ami pilnuję porządku tego miejsca. W celu zachowania porządku na serwerze szkolnym, każdy użytkownik musi przejść weryfikację bycia częścią społeczności szkolnej.*\n\n- <:17:861662623627739167> **Jeśli jesteś uczniem 17LO Gdynia**, kliknij przycisk poniżej, wejdź w wysłany link i zaloguj się szkolnym kontem Microsoft w celu połączenia swojego konta szkolnego z tym profilem Discord. _Po zakończeniu łączenia, kliknij przycisk ponownie i dostaniesz rolę <@&860081913826115589>!_\n- 🚪 **Jeśli jesteś <@&1148308933623152733>em/<@&1018185474872975471>em** i masz już znajomego na serwerze, poproś go aby użył /friend (nick) na <#860081914262192147>. Da ci to rolę <@&1148308933623152733>, dającą dostęp do serwera. *Byli uczniowe 17LO mogą użyć `/weteran`, aby dostać rolę <@&1018185474872975471>.*\n- 📝 **Osoby zainteresowane zapisaniem się do Siedemnastki**, tak zwani Rekruci, mogą uzyskać dostęp do Strefy Rekruta, gdzie można zadawać pytania ludziom ze szkoły oraz dostać generalne info o rekrutacji. Aby zdobyć rolę <@&1148300495585300601>, użyj przycisku poniżej. ||Nie da ci to dostępu do pisania na innych kanałach, ale możesz wciąż spróbować dostać <@&1148308933623152733>a, który pozwala.||\n- 👩🏻‍🏫 **W przypadku nauczycieli**, jeśli jacyś tu kiedyś wejdą, prosimy o kontakt z <@&860081913871204400>.\n\nW przypadku problemów lub nietypowych przypadków (np. zmiana imienia), skontaktuj się z <@&860081913871204400>.\n\n*Miłego rozmawiania!*",
+    "verify_panel_button_ms": "Weryfikacja kontem Microsoft",
+    "verify_panel_button_rc": "Jestem rekrutem",
+    "verify_panel_command_desc": "Wysyła panel weryfikacyjny na wybrany kanał",
+    "verify_panel_command_param_channel_desc": "Kanał, na który ma zostać wysłany panel",
+    "verify_panel_command_confirmation_message": "Wysłano panel weryfikacyjny!",
+
+    "class_command_unverified": "W celu użycia tej komendy musisz się zweryfikować!\n> Możesz to zrobić używając panelu dostępnego na kanale <#213742069>",
+    "class_command_embed_header": "Lista użytkowników klasy",
+    "class_command_not_member": "Nie masz uprawnień do sprawdzenia informacji klasie, do której nie należysz!\n> Jeżeli uważasz, że to błąd skontaktuj się z administracją!",
+    "class_command_class_empty_part1": "Żaden użytkownik nie jest przypisany do klasy **",
+        "class_command_class_empty_part2": "**!\n> Jeżeli uważasz, że to błąd skontaktuj się z administracją!",
+    "class_command_role_gospodarz":"Gospodarz",
+    "class_command_role_gospodarz_empty":"Brak",
+    "class_command_role_deptgospodarz":"Zastępca gospodarza",
+    "class_command_role_deptgospodarz_empty":"Brak",
+    "class_command_role_skarbnik":"Skarbnik",
+    "class_command_role_skarbnik_empty":"Brak",
+    "class_command_role_connector":"Łącznik",
+    "class_command_role_connector_empty":"Brak",
+    "class_command_role_none":"Uczniowe",
+    "class_command_role_none_empty":"Brak",
+    
+    
+    "stop_description": "Bezpiecznie zatrzymuje bota.",
+    "stop_stopping": "Zatrzymano!",
+    "stop_disabled": "Funkcja wyłączona!"
+}

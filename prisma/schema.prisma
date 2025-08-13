@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/base.db"
+}
+
+model User {
+  id             String  @id
+  email          String  @unique
+  name           String
+  classId        Int
+  class          String //TODO: Migrate this away to classId
+  role           Int //FOR 0-3: @Gospodarz, etc. - but I have no idea what maps to what OR FOR 3+: Teacher settings bit (format to be determined)
+  isPublic       Boolean
+
+  classInfo ClassInfo @relation(fields:[classId], references: [id])
+  outsiders Outsider[]
+}
+
+model ClassInfo {
+  id        Int @id
+  start     Int //2020, 2023, etc. OR 0 (a cheesy workaround for teachers without a class)
+  grade     Int //1-4 OR higher (will result in @Weteran) OR 0 (a cheesy workaround for teachers without a class)
+  group     String //A, B, C, etc. OR a placeholder - %old_weteran or %classless_teacher
+  profileId Int
+  role      String //a Discord Snowflake with the Role ID of a given class OR a placeholder - %weteran or %classless_teacher
+
+  profile Profile @relation(fields: [profileId], references: [id])
+  members User[] //It's not needed for anything, but Prisma wouldn't work without an opposite relationsip.
+}
+
+model Profile {
+  id Int @id
+  description String //Biol-Chem, Mat-Inf, etc.; Just for us - no effect on the app.
+  roleId String //a Discord Snowflake with the Role ID of a given profile OR %weteran for classes so old that noone remebers their profile OR a comma-separated list of Discord Snowflakes for some techers, who may apply to several (eg. maths - MatInf + MatGeo); will contain just one Discord Snowflake 99% of the time
+
+  relatedClasses ClassInfo[] //It's not needed for anything, but Prisma wouldn't work without an opposite relationsip.
+}
+
+model Outsider {
+  id        String   @id
+  username  String
+  createdAt DateTime @default(now())
+
+  addedBy   User   @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+//TODO: Change how this works: a) unless we all want to sit on Discord for 6h when this goes live, veterans should not require admin confirmation; b) ClassInfo is currently not used
+model Weteran {
+  id        String   @id
+  username  String
+  createdAt DateTime @default(now())
+
+  adminId   String
+}
