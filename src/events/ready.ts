@@ -1,4 +1,5 @@
 import fs from "fs";
+import { mainCodeDir } from "index.js";
 import { join } from "path";
 import Bot from "../classes/Bot.js";
 import { logError, logInfo } from "../functions/logger.js";
@@ -12,8 +13,8 @@ export async function run(client: Bot) {
       exit(1, client);
     }
     logInfo(Strings.logs_commands_adding);
-    if (!fs.existsSync(join(Strings.WORKDIR, "data/.bot_already_ran_once"))){
-      fs.mkdirSync(join(Strings.WORKDIR, "data/.bot_already_ran_once"));
+    if (!fs.existsSync(join(mainCodeDir, "../data/.bot_already_ran_once"))){
+      fs.mkdirSync(join(mainCodeDir, "../data/.bot_already_ran_once"), {recursive: true});
     }
     
     const appCommands = Array.from(client.commands.values());
@@ -35,9 +36,9 @@ export async function run(client: Bot) {
   }
 
   else{
-    if (!fs.existsSync(join(Strings.WORKDIR, "data/.bot_already_ran_once"))){
+    if (!fs.existsSync(join(mainCodeDir, "../data/.bot_already_ran_once"))){
       logInfo(Strings.logs_commands_hint);
-      fs.mkdirSync(join(Strings.WORKDIR, "data/.bot_already_ran_once"));
+      fs.mkdirSync(join(mainCodeDir, "../data/.bot_already_ran_once"), {recursive: true});
       exit(0, client);
     }
   }

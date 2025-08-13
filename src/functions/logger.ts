@@ -5,15 +5,16 @@ import "dotenv/config";
 import { appendFileSync, existsSync, mkdirSync } from "fs";
 import path from "path";
 
+import { mainCodeDir } from "index";
 import Strings from "../strings.json" assert { type: "json" };
 import { exit } from "./utils.js";
 
 const saveToFile = (type: string, ...text: string[]) => {
   // Log in file
-  if (!existsSync(path.join(Strings.WORKDIR, "data/outputs/logs")))
-    mkdirSync(path.join(Strings.WORKDIR, "data/outputs/logs"));
+  if (!existsSync(path.join(mainCodeDir, "../data/outputs/logs")))
+    mkdirSync(path.join(mainCodeDir, "../data/outputs/logs"), {recursive: true});
   appendFileSync(
-    path.join(Strings.WORKDIR, `data/outputs/logs/${dayjs().format("DD.MM.YYYY")}.log`),
+    path.join(mainCodeDir, `../data/outputs/logs/${dayjs().format("DD.MM.YYYY")}.log`),
     `[${type}] | [${dayjs().format("DD.MM.YYYY | HH:mm:ss")}] | ${text}\n`,
     { encoding: "utf-8" }
   );
@@ -32,7 +33,7 @@ const logToWebhook = (type: string, ...text: string[]) => {
 export function logfileSessionOpen(): void {
   saveToFile("SESSION", Strings.logs_logger_startup);
   appendFileSync(
-    path.join(Strings.WORKDIR, "data/outputs/errors.txt"),
+    path.join(mainCodeDir, "../data/outputs/errors.txt"),
     `---------- NEW LOGGING SESSION  ---  ${dayjs().format("DD.MM.YYYY | HH:mm:ss")} ----------\n`,
     { encoding: "utf-8" }
   )
@@ -73,7 +74,7 @@ export function logGuild(...text: string[]): void {
   saveToFile("GUILD", ...text);
 }
 
-export function failStartup(){
-  console.log(Strings.logs_no_workdir);
+export function failStartup(e: any){
+  console.error(Strings.logs_logger_init_failed, e);
   exit(1);
 }

@@ -2,6 +2,7 @@ import { Collection, Interaction } from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
 
+import { mainCodeDir } from "index.js";
 import { logInfo } from "../../functions/logger.js";
 import Strings from "../../strings.json" assert { type: "json" };
 import Bot from "../Bot.js";
@@ -17,7 +18,7 @@ export default class InteractionHandler extends Collection<
   }
 
   async loadInteractions(): Promise<Collection<string, any>> {
-    const workdir = join(Strings.WORKDIR, "dist/interactions");
+    const workdir = join(mainCodeDir, "interactions");
     logInfo(Strings.logs_registry_interactions_begin + workdir);
     const categoryFolders = readdirSync(workdir);
     

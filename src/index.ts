@@ -1,16 +1,20 @@
 import "dotenv/config";
 
-import { existsSync } from "fs";
 import Bot from "./classes/Bot.js";
 import { failStartup, logfileSessionOpen } from "./functions/logger.js";
-import Strings from "./strings.json" assert { type: "json" };
+
+
+function getDir(): string{
+    return import.meta.dir;
+}
+
+export const mainCodeDir: string = getDir();
 
 try {
-    if(!existsSync(Strings.WORKDIR)) failStartup();
     logfileSessionOpen();
 }
-catch {
-    failStartup();
+catch (e) {
+    failStartup(e);
 }
 
 const client = new Bot();

@@ -1,15 +1,11 @@
 {
-    "WORKDIR": "!!!PLEASE CHANGE ME!!! An absolute path to the working directory. It must contain the following: .env (derived from this file), data (logs + first-run note + must include a base.db file derived from prisma/placeholder_database.db), node_modules + pnpm-lock.yaml (libraries), and dist (generated Siedemnastkobot binaries).",
-    
-    
-    
     "logs_logger_startup": "---------- NEW LOGGING SESSION ----------",
     "logs_logger_webhook_error": "BEWARE: The error above has not been logged as a webhook. Please check your .env (LOGGER_WEBHOOK), Internet connection, or whatever else webhooks need.",
     
     "logs_startup": "Bootin' 'er up!",
     "logs_startup_done": " is ready to use!",
     
-    "logs_no_workdir": "CRITICAL STARTUP ERROR: WORKDIR NOT FOUND!!!",
+    "logs_logger_init_failed": "CRITICAL STARTUP ERROR: COULDN'T INITIALISE THE LOGGER:\n",
     "logs_no_token": "No token has been provided! The bot will now exit.",
     
     "logs_registry_commands_begin": "Registering commands - working directory: ",

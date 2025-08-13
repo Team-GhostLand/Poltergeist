@@ -2,6 +2,7 @@ import { Collection } from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
 
+import { mainCodeDir } from "index.js";
 import { logInfo } from "../../functions/logger.js";
 import Strings from "../../strings.json" assert { type: "json" };
 import Bot from "../Bot.js";
@@ -14,7 +15,7 @@ export default class CommandHandler extends Collection<string, any> {
   }
 
   async loadCommands(): Promise<Collection<string, any>> {
-    const workdir = join(Strings.WORKDIR, "dist/commands");
+    const workdir = join(mainCodeDir, "commands");
     logInfo(Strings.logs_registry_commands_begin + workdir);
     const categoryFolders = readdirSync(workdir);
     

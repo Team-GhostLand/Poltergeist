@@ -1,6 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 
+import { mainCodeDir } from "index.js";
 import { logInfo } from "../../functions/logger.js";
 import Strings from "../../strings.json" assert { type: "json" };
 import Bot from "../Bot.js";
@@ -12,7 +13,7 @@ export default class EventHandler {
   }
 
   async loadEvents(): Promise<void> {
-    const workdir = join(Strings.WORKDIR, "dist/events");
+    const workdir = join(mainCodeDir, "events");
     logInfo(Strings.logs_registry_events_begin + workdir);
     const eventFolder = fs.readdirSync(workdir);
     

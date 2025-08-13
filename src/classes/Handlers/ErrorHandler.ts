@@ -3,6 +3,7 @@ import fs from "fs";
 import { join } from "path";
 import { inspect } from "util";
 
+import { mainCodeDir } from "index.js";
 import { logError, logInfo } from "../../functions/logger.js";
 import { exit } from "../../functions/utils.js";
 import Strings from "../../strings.json" assert { type: "json" };
@@ -39,7 +40,7 @@ export default class ErrorHandler {
       )} ]]\n${lines}\n${error.toString()}${
         source ? `\nMore Info: ${source}` : ""
       }\n`;
-      fs.appendFileSync(join(Strings.WORKDIR, "data/outputs/errors.txt"), data, {
+      fs.appendFileSync(join(mainCodeDir, "../data/outputs/errors.txt"), data, {
         encoding: "utf-8",
       });
 
@@ -78,7 +79,7 @@ export default class ErrorHandler {
         )} ]]\n${lines}\n${reason.toString()}${
           promiseText ? `\nMore Info: ${promiseText}` : ""
         }\n`;
-        fs.appendFileSync(join(Strings.WORKDIR, "data/outputs/errors.txt"), data, {
+        fs.appendFileSync(join(mainCodeDir, "../data/outputs/errors.txt"), data, {
           encoding: "utf-8",
         });
       }
