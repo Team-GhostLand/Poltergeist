@@ -1,0 +1,2 @@
+# Poltergeist
+A Discord bot
