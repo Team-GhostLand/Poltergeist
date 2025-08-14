@@ -35,38 +35,30 @@ if (!process.env.LOGGER_WEBHOOK || process.env.LOGGER_WEBHOOK === "Webhook token
 
 
 // --- STEP 4: REGISTER THE COMMANDS IF DOING SO WAS REQUESTED ---
+function validateID(){
+    if (!process.env.CLIENT_ID || process.env.CLIENT_ID === "Bot client ID. Must be set to deploy/list/remove commands, otherwise useless."){
+        logError(Strings.logs_commands_add_failed, "no client ID");
+        exit(1);
+    }
+}
+
 if (process.argv.includes("--deploy-commands")) {
-    if (process.argv.includes("--remove-commands")) {
+    if (process.argv.includes("--remove-commands") || process.argv.includes("--list-commands")) {
         logError(Strings.logs_commands_conflict);
         exit(1);
     }
     
-    if (!process.env.CLIENT_ID || process.env.CLIENT_ID === "Bot client ID. Must be set to deploy/remove commands, otherwise useless."){
-        logError(Strings.logs_commands_add_failed, "no client ID");
-        exit(1);
-    }
+    validateID();
 
     logInfo(Strings.logs_commands_adding);
-    const commands: string[] = [];
+    const commands: any[] = [];
     const rest = new REST().setToken(process.env.DISCORD_TOKEN as string);
     
     
     try {
         const appCommands = await loadHandlers(true);
-        appCommands.forEach(async (command) => {
-            try{
-                await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: JSON.stringify([command.data]) });
-                console.log("Registered: "+command.data.name)
-            }
-            catch (e){
-                logErrorMsg(e, Strings.logs_commands_add_failed);
-                console.log("Failed to register: "+command.data.name)
-                exit(1);
-            }
-            console.log("Completed: "+command.data.name)
-            logInfo(JSON.stringify(command.data));
-            commands.push(JSON.stringify(command.data));
-        });
+        appCommands.forEach((command) => commands.push(command.data));
+        await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: commands })
     }
     catch (e){
         logErrorMsg(e, Strings.logs_commands_add_failed);
@@ -75,23 +67,42 @@ if (process.argv.includes("--deploy-commands")) {
     
     
     logInfo(Strings.logs_commands_added);
-    //exit(0);
+    exit(0);
 }
-else if (process.argv.includes("--remove-commands")) {
-    if (!process.env.CLIENT_ID || process.env.CLIENT_ID === "Bot client ID. Must be set to deploy/remove commands, otherwise useless."){
-        logError(Strings.logs_commands_remove_failed, "no client ID");
+else if (process.argv.includes("--list-commands")) {
+    if (process.argv.includes("--remove-commands")) {
+        logError(Strings.logs_commands_conflict);
         exit(1);
     }
     
+    validateID();
+    
+    logInfo(Strings.logs_commands_listing);
+    const rest = new REST().setToken(process.env.DISCORD_TOKEN as string);
+    
+    
+    try {
+        console.log(await rest.get(Routes.applicationCommands(process.env.CLIENT_ID as string)))
+    }
+    catch (e){
+        logErrorMsg(e, Strings.logs_commands_list_failed);
+        exit(1);
+    }
+    
+    logInfo(Strings.logs_commands_listed);
+    exit(0);
+}
+else if (process.argv.includes("--remove-commands")) {
+    validateID();
     logInfo(Strings.logs_commands_removing);
     const rest = new REST().setToken(process.env.DISCORD_TOKEN as string);
     
     
     try {
-        await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: [] })
+        await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string));
     }
     catch (e){
-        logErrorMsg(e, Strings.logs_commands_add_failed);
+        logErrorMsg(e, Strings.logs_commands_remove_failed);
         exit(1);
     }
     
