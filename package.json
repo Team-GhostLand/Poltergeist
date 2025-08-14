@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "prepare": "npx prisma generate",
-    "prisma": "npx prisma generate",
+    "prepare": "bun x prisma generate",
+    "prisma": "bun x prisma generate",
     "start": "bun run ./src/index.ts"
   },
   "author": "Team GhostLand; original version (Siedemnaskobot - a DC bot for 17LO Gdynia's Discord) developed by SimonB50, with an „assist” (-10x dev kind) by Guzio.",
