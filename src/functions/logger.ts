@@ -6,7 +6,7 @@ import { appendFileSync, existsSync, mkdirSync } from "fs";
 import path from "path";
 
 import { mainCodeDir } from "index";
-import Strings from "../strings.json" assert { type: "json" };
+import Strings from "../strings.json" with { type: "json" };
 import { exit } from "./utils.js";
 
 const saveToFile = (type: string, ...text: string[]) => {

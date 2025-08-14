@@ -4,7 +4,7 @@ import { REST, Routes } from "discord.js";
 import { exit, loadHandlers } from "functions/utils.js";
 import Bot from "./classes/Bot.js";
 import { failStartup, logError, logErrorMsg, logfileSessionOpen, logInfo } from "./functions/logger.js";
-import Strings from "./strings.json" assert { type: "json" };
+import Strings from "./strings.json" with { type: "json" };
 
 
 // --- STEP 1: EXPORT THE WORKDIR --

@@ -8,7 +8,7 @@ import {
 import Bot from "../../classes/Bot.js";
 import { logInfo } from "../../functions/logger.js";
 import { exit } from "../../functions/utils.js";
-import Strings from "../../strings.json" assert { type: "json" };
+import Strings from "../../strings.json" with { type: "json" };
 
 export const data = {
     ...new SlashCommandBuilder()

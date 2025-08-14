@@ -6,7 +6,7 @@ import { inspect } from "util";
 import { mainCodeDir } from "index.js";
 import { logError, logInfo } from "../../functions/logger.js";
 import { exit } from "../../functions/utils.js";
-import Strings from "../../strings.json" assert { type: "json" };
+import Strings from "../../strings.json" with { type: "json" };
 import Bot from "../Bot.js";
 
 export default class ErrorHandler {

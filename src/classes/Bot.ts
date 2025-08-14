@@ -7,7 +7,7 @@ import EventHandler from "./Handlers/EventHandler.js";
 import InteractionHandler from "./Handlers/InteractionHandler.js";
 
 import { logErrorMsg, logInfo } from "../functions/logger.js";
-import Strings from "../strings.json" assert { type: "json" };
+import Strings from "../strings.json" with { type: "json" };
 
 export default class Bot extends Client {
     commands: Collection<string, any>;

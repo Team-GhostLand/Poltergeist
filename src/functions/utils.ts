@@ -19,7 +19,7 @@ import Bot from "../classes/Bot.js";
 import { logError, logInfo } from "./logger.js";
 
 import { mainCodeDir } from "index.js";
-import Strings from "../strings.json" assert { type: "json" };
+import Strings from "../strings.json" with { type: "json" };
 
 export async function findGuild(
     id: Snowflake,

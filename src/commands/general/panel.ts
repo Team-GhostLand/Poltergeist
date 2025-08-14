@@ -11,7 +11,7 @@ import {
 } from "discord.js";
 
 import Bot from "../../classes/Bot.js";
-import Strings from "../../strings.json" assert { type: "json" };
+import Strings from "../../strings.json" with { type: "json" };
 
 export const data = {
     ...new SlashCommandBuilder()
