@@ -42,7 +42,7 @@ export default class Bot extends Client {
             await this.login(process.env.DISCORD_TOKEN)
         }
         catch (e) {
-            logErrorMsg(e, )
+            logErrorMsg(e, Strings.logs_error_startup)
         }
     }
 }
