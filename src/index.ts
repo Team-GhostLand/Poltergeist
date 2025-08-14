@@ -53,8 +53,20 @@ if (process.argv.includes("--deploy-commands")) {
     
     try {
         const appCommands = await loadHandlers(true);
-        appCommands.forEach((command) => commands.push(command.data.toJSON()));
-        await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: commands })
+        appCommands.forEach(async (command) => {
+            try{
+                await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: JSON.stringify([command.data]) });
+                console.log("Registered: "+command.data.name)
+            }
+            catch (e){
+                logErrorMsg(e, Strings.logs_commands_add_failed);
+                console.log("Failed to register: "+command.data.name)
+                exit(1);
+            }
+            console.log("Completed: "+command.data.name)
+            logInfo(JSON.stringify(command.data));
+            commands.push(JSON.stringify(command.data));
+        });
     }
     catch (e){
         logErrorMsg(e, Strings.logs_commands_add_failed);
@@ -63,7 +75,7 @@ if (process.argv.includes("--deploy-commands")) {
     
     
     logInfo(Strings.logs_commands_added);
-    exit(0);
+    //exit(0);
 }
 else if (process.argv.includes("--remove-commands")) {
     if (!process.env.CLIENT_ID || process.env.CLIENT_ID === "Bot client ID. Must be set to deploy/remove commands, otherwise useless."){
@@ -72,17 +84,16 @@ else if (process.argv.includes("--remove-commands")) {
     }
     
     logInfo(Strings.logs_commands_removing);
-    const rest = new REST().setToken("REST");
+    const rest = new REST().setToken(process.env.DISCORD_TOKEN as string);
     
-    (async () => {
-        try {
-            await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: [] })
-        }
-        catch (e){
-            logErrorMsg(e, Strings.logs_commands_remove_failed);
-            exit(1);
-        }
-    })
+    
+    try {
+        await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: [] })
+    }
+    catch (e){
+        logErrorMsg(e, Strings.logs_commands_add_failed);
+        exit(1);
+    }
     
     logInfo(Strings.logs_commands_removed);
     exit(0);
