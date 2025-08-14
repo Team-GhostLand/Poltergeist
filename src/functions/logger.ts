@@ -60,6 +60,19 @@ export function logError(...text: string[]): void {
     }
 }
 
+export function logErrorMsg(msg: any, ...text: string[]): void {
+    // Log in console
+    console.log(chalk.bold.red("[ERROR]"), ...text, msg);
+
+    saveToFile("ERROR", ...text, msg.toJSON());
+    try{
+        logToWebhook("ERROR", ...text, msg.toJSON());
+    }
+    catch(e){
+        logInfo(Strings.logs_logger_webhook_error)
+    }
+}
+
 export function logCommand(...text: string[]): void {
     // Log in console
     console.log(chalk.bold.gray("[COMMAND]"), ...text);

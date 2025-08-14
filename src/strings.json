@@ -4,6 +4,7 @@
     
     "logs_startup": "Bootin' 'er up!",
     "logs_startup_done": " is ready to use!",
+    "logs_error_startup": "Bot startup failed:\n",
     
     "logs_logger_init_failed": "CRITICAL STARTUP ERROR: COULDN'T INITIALISE THE LOGGER:\n",
     "logs_no_token": "No token has been provided! The bot will now exit.",
@@ -15,10 +16,10 @@
     
     "logs_commands_removing": "Removing commands...",
     "logs_commands_removed": "Commands removed successfully! Boot the bot with the --deploy-commands flag to deploy them again.",
-    "logs_commands_remove_failed": "Failed to remove commands: ",
+    "logs_commands_remove_failed": "Failed to remove commands:\n",
     "logs_commands_adding": "Deploying commands...",
     "logs_commands_added": "Commands deployed successfully! They can be removed with the --remove-commands flag or re-deployed (after eg. an edit) with --deploy-commands again. Otherise, boot the bot without any flags to use your just-deployed commands.",
-    "logs_commands_add_failed": "Failed to add commands: ",
+    "logs_commands_add_failed": "Failed to add commands:\n",
     "logs_commands_conflict": "You can't add and remove commands at the same time!",
     
     "logs_stop_cmd": "Bot has been stopped using a command by ",

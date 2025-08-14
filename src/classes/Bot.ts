@@ -6,7 +6,7 @@ import ErrorHandler from "./Handlers/ErrorHandler.js";
 import EventHandler from "./Handlers/EventHandler.js";
 import InteractionHandler from "./Handlers/InteractionHandler.js";
 
-import { logInfo } from "../functions/logger.js";
+import { logErrorMsg, logInfo } from "../functions/logger.js";
 import Strings from "../strings.json" assert { type: "json" };
 
 export default class Bot extends Client {
@@ -38,6 +38,11 @@ export default class Bot extends Client {
         this.interactions = await new InteractionHandler(this).loadInteractions();
         await new ErrorHandler(this).preventErrors();
         
-        await this.login(process.env.DISCORD_TOKEN);
+        try {
+            await this.login(process.env.DISCORD_TOKEN)
+        }
+        catch (e) {
+            logErrorMsg(e, )
+        }
     }
 }

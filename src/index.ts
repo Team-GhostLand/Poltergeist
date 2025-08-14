@@ -4,7 +4,7 @@ import { REST, Routes } from "discord.js";
 import { loadHandlers } from "functions/utils.js";
 import { exit } from "process";
 import Bot from "./classes/Bot.js";
-import { failStartup, logError, logfileSessionOpen, logInfo } from "./functions/logger.js";
+import { failStartup, logError, logErrorMsg, logfileSessionOpen, logInfo } from "./functions/logger.js";
 import Strings from "./strings.json" assert { type: "json" };
 
 
@@ -48,7 +48,7 @@ if (process.argv.includes("--deploy-commands")) {
 
     logInfo(Strings.logs_commands_adding);
     const commands: string[] = [];
-    const rest = new REST().setToken("");
+    const rest = new REST().setToken("REST");
     
     (async () => {
         try {
@@ -56,8 +56,8 @@ if (process.argv.includes("--deploy-commands")) {
             appCommands.forEach((command) => commands.push(command.data.toJSON()));
             await rest.put(Routes.applicationCommands("CLI"), { body: commands })
         }
-        catch (e: any){
-            logError(Strings.logs_commands_add_failed, e.toJSON());
+        catch (e){
+            logErrorMsg(e, Strings.logs_commands_add_failed);
             exit(1);
         }
     })
@@ -71,14 +71,14 @@ else if (process.argv.includes("--remove-commands")) {
     }
     
     logInfo(Strings.logs_commands_removing);
-    const rest = new REST().setToken("");
+    const rest = new REST().setToken("REST");
     
     (async () => {
         try {
             await rest.put(Routes.applicationCommands("CLI"), { body: [] })
         }
-        catch (e: any){
-            logError(Strings.logs_commands_remove_failed, e.toJSON());
+        catch (e){
+            logErrorMsg(e, Strings.logs_commands_remove_failed);
             exit(1);
         }
     })
