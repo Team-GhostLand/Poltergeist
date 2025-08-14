@@ -12,23 +12,6 @@ const commandHandler = async (
     interaction: ChatInputCommandInteraction,
     client: Bot
 ) => {
-    // // Get bot uptime in seconds
-    // const uptime = Math.floor(client.uptime! / 1000);
-
-    // if (uptime < 5) {
-    //     const reply = new EmbedBuilder()
-    //         .setTitle("Błąd")
-    //         .setColor("#ff0000")
-    //         .setDescription(
-    //             "Obecnie bot jest w trakcie procesu uruchamiania.\n> Spróbuj ponownie później."
-    //         )
-    //         .setTimestamp();
-
-    //     return interaction.reply({
-    //         embeds: [reply],
-    //     });
-    // }
-
     const command = await client.commands.get(interaction.commandName);
     if (command) await command.run(client, interaction);
 

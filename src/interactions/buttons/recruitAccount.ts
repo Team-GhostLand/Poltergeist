@@ -1,18 +1,14 @@
 import Bot from "classes/Bot.js";
 import {
-  ButtonInteraction,
-  EmbedBuilder,
-  GuildMemberRoleManager,
+    ButtonInteraction,
+    EmbedBuilder
 } from "discord.js";
 
 export const run = async (client: Bot, interaction: ButtonInteraction) => {
-  // Check if user has Recruit role
-  const hasRecruitRole = (
-    interaction.member?.roles as GuildMemberRoleManager
-  ).cache.has("1148300495585300601");
-  if (hasRecruitRole) {
+  // Check if... Nothing. This is always false
+  if (false) {
     await interaction.reply({
-      content: "Już masz rolę Rekruta!",
+      content: "[TO BE REMOVED]",
       ephemeral: true,
     });
     return;
@@ -20,15 +16,10 @@ export const run = async (client: Bot, interaction: ButtonInteraction) => {
 
   // Create embed
   const embed = new EmbedBuilder()
-    .setTitle("Rola rekruta")
-    .setDescription("Pomyślnie przypisano Ci rolę <@&1148300495585300601>!")
+    .setTitle("[TO BE REMOVED]")
+    .setDescription("[TO BE REMOVED]")
     .setColor("#00ff00")
     .setTimestamp();
-
-  // Add Recruit role
-  await (interaction.member?.roles as GuildMemberRoleManager).add(
-    "1148300495585300601"
-  );
 
   // Send embed
   await interaction.reply({

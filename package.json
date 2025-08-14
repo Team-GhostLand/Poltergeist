@@ -5,16 +5,15 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "_prepare": "npx tsc && npx prisma generate && npx prisma migrate dev",
-    "start:dev": "npx tsc && node --enable-source-maps .",
-    "start:prod": "node --enable-source-maps . --deploy-commands"
+    "prepare": "npx prisma generate",
+    "prisma": "npx prisma generate",
+    "start": "bun run ./src/index.ts"
   },
   "author": "Team GhostLand; original version (Siedemnaskobot - a DC bot for 17LO Gdynia's Discord) developed by SimonB50, with an „assist” (-10x dev kind) by Guzio.",
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^5.3.0",
     "chalk": "4.1.2",
-    "cryptr": "^6.3.0",
     "dayjs": "^1.11.7",
     "discord.js": "^14.11.0",
     "dotenv": "^16.0.3",

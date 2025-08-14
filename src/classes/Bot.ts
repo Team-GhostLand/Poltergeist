@@ -37,7 +37,6 @@ export default class Bot extends Client {
         
         await new ErrorHandler(this).preventErrors();
         
-        if (!process.env.SECRET_TOKEN) return logError(Strings.logs_no_token);
         if (!process.env.DISCORD_TOKEN) return logError(Strings.logs_no_token);
         if (process.env.DISCORD_TOKEN === "self-explained") return logError(Strings.logs_no_token);
         await this.login(process.env.DISCORD_TOKEN);
