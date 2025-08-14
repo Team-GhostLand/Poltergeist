@@ -13,7 +13,7 @@ export default class Bot extends Client {
     commands: Collection<string, any>;
     interactions: Collection<string, any>;
     db: PrismaClient;
-    token: string;
+    interted_token: string;
     
     constructor(token: string) {
         super({
@@ -27,10 +27,8 @@ export default class Bot extends Client {
     
         this.commands = new Collection();
         this.interactions = new Collection();
-        
         this.db = new PrismaClient();
-        
-        this.token = token;
+        this.interted_token = token;
     }
   
     async start() {
@@ -42,7 +40,7 @@ export default class Bot extends Client {
         await new ErrorHandler(this).preventErrors();
         
         try {
-            await this.login(this.token)
+            await this.login(this.interted_token)
         }
         catch (e) {
             logErrorMsg(e, Strings.logs_error_startup)
