@@ -1,8 +1,7 @@
 import "dotenv/config";
 
 import { REST, Routes } from "discord.js";
-import { loadHandlers } from "functions/utils.js";
-import { exit } from "process";
+import { exit, loadHandlers } from "functions/utils.js";
 import Bot from "./classes/Bot.js";
 import { failStartup, logError, logErrorMsg, logfileSessionOpen, logInfo } from "./functions/logger.js";
 import Strings from "./strings.json" assert { type: "json" };
@@ -49,7 +48,7 @@ if (process.argv.includes("--deploy-commands")) {
 
     logInfo(Strings.logs_commands_adding);
     const commands: string[] = [];
-    const rest = new REST().setToken(process.env.DISCORD_TOKEN);
+    const rest = new REST().setToken(process.env.DISCORD_TOKEN as string);
     
     (async () => {
         try {
@@ -91,7 +90,14 @@ else if (process.argv.includes("--remove-commands")) {
 
 
 // --- STEP 5: START THE BOT ---
-const client = new Bot();
+const client = new Bot(process.env.DISCORD_TOKEN as string);
 
 client.start().then(() => null);
 export default client;
+
+
+// --- STEP 6: HANDLE EXITS ---
+process.on('SIGINT', function() {
+    logInfo(Strings.logs_stop_ctrlc)
+    exit(0, client)
+});

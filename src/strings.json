@@ -23,6 +23,7 @@
     "logs_commands_conflict": "You can't add and remove commands at the same time!",
     
     "logs_stop_cmd": "Bot has been stopped using a command by ",
+    "logs_stop_ctrlc": "Exiting.",
     "logs_error_fatal": "An unexpected error occured and the bot has crashed. Check errors.txt file for more details.",
     "logs_error": "An unexpected error occured! Check errors.txt file for more details.",
     

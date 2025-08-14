@@ -13,8 +13,9 @@ export default class Bot extends Client {
     commands: Collection<string, any>;
     interactions: Collection<string, any>;
     db: PrismaClient;
+    token: string;
     
-    constructor() {
+    constructor(token: string) {
         super({
             intents: [
                 GatewayIntentBits.Guilds,
@@ -28,6 +29,8 @@ export default class Bot extends Client {
         this.interactions = new Collection();
         
         this.db = new PrismaClient();
+        
+        this.token = token;
     }
   
     async start() {
@@ -39,7 +42,7 @@ export default class Bot extends Client {
         await new ErrorHandler(this).preventErrors();
         
         try {
-            await this.login(process.env.DISCORD_TOKEN)
+            await this.login(this.token)
         }
         catch (e) {
             logErrorMsg(e, Strings.logs_error_startup)
