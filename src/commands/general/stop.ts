@@ -10,12 +10,11 @@ import { logInfo } from "../../functions/logger.js";
 import { exit } from "../../functions/utils.js";
 import Strings from "../../strings.json" with { type: "json" };
 
-export const data = {
-    ...new SlashCommandBuilder()
-        .setName("stop")
-        .setDescription(Strings.stop_description)
-        .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
-        .toJSON()
+export const data = { ...new SlashCommandBuilder()
+    .setName("stop")
+    .setDescription(Strings.stop_description)
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
+    .toJSON()
 };
 
 export async function run(
