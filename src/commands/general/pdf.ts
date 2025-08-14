@@ -1,12 +1,13 @@
 import {
     ChannelType,
     ChatInputCommandInteraction,
+    Collection,
     PermissionsBitField,
     SlashCommandBuilder,
     TextChannel,
 } from "discord.js";
 
-import pdf2img from "pdf-img-convert";
+//import pdf2img from "pdf-img-convert";
 import Bot from "../../classes/Bot.js";
 
 export const data = {
@@ -44,8 +45,8 @@ export async function run(
     // Get link to plan
     const link = interaction.options.getString("link", true);
 
-    const output = await pdf2img.convert(link);
-    output.forEach(async (img, key) => {
+    const output = new Collection; //await pdf2img.convert(link);
+    output.forEach(async (img: any, key) => {
         await channel.send({
             // @ts-ignore
             files: [
