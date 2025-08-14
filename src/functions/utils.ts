@@ -1,6 +1,7 @@
 import {
     ButtonInteraction,
     Channel,
+    Collection,
     CommandInteraction,
     EmbedBuilder,
     Guild,
@@ -12,8 +13,13 @@ import {
 import "dotenv/config";
 
 import chalk from "chalk";
+import { lstatSync, readdirSync } from "fs";
+import { join } from "path";
 import Bot from "../classes/Bot.js";
-import { logError } from "./logger.js";
+import { logError, logInfo } from "./logger.js";
+
+import { mainCodeDir } from "index.js";
+import Strings from "../strings.json" assert { type: "json" };
 
 export async function findGuild(
     id: Snowflake,
@@ -148,15 +154,39 @@ export function exit(code: number, bot?: Bot){
     process.exit(code);
 }
 
-export function classNameToClassId(name: string): number {
-    return 0; //TODO: Implement
+export async function loadHandlers(isCommand: boolean, from?: { dir: string, displayname: string }): Promise<Collection<string, any>> {
+    
+    if (!from){ 
+        if (isCommand) return loadHandlers(true, {dir: join(mainCodeDir, "commands"), displayname: "CMD"});
+        else {
+            logError(Strings.logs_registry_error);
+            return new Collection<string, any>;
+        }
+    }
+    
+    logInfo(Strings.logs_registry_begin + from.displayname);
+    const commandFolder = readdirSync(from.dir);
+    let output = new Collection<string, any>();
+    
+    for (const subfolderOrCommandFile of commandFolder) {
+        
+        let fullPathOfSubfolderOrCommandFile = join(from.dir, subfolderOrCommandFile)
+        
+        if(lstatSync(fullPathOfSubfolderOrCommandFile).isDirectory()){
+            output = output.concat(await loadHandlers(isCommand, {dir: fullPathOfSubfolderOrCommandFile, displayname: from.displayname+":"+subfolderOrCommandFile}));
+            continue;
+        }
+        
+        if (!fullPathOfSubfolderOrCommandFile.endsWith(".ts")) continue;
+        
+        const command = await import(fullPathOfSubfolderOrCommandFile);
+        
+        let name = subfolderOrCommandFile.slice(0, -3); //Simple name generation: from the filename
+        if (isCommand) name = command.data.name;        //Fancier name generation: from the command itself (commands only)
+        
+        output.set(name, command);
+        logInfo(Strings.logs_registry_found + name+"@"+from.displayname);
+    }
+    
+    return output;
 }
-
-export const roleList: string[] = [
-    "Gospodarz", //0
-    "Zastępca gospodarza", //1
-    "Skarbnik", //2
-    "Brak/Ukryta", //3
-    `"we have Trójki Klasowe at home" - Łącznik z Biblioteką` //4 - NIE MA NA SERWERZE ANI W KOMENDZIE `/klasa`! //TODO: Add support everywhere.
-    //555 - 777 -> Nauczyciele: 5(yes), 7(no); NAUCZYCIEL/STAFF/MANAGEMENT //TODO: Implement
-]

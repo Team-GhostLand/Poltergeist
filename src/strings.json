@@ -7,20 +7,19 @@
     
     "logs_logger_init_failed": "CRITICAL STARTUP ERROR: COULDN'T INITIALISE THE LOGGER:\n",
     "logs_no_token": "No token has been provided! The bot will now exit.",
+    "logs_no_wh_token": "No webhook token has been provided! Error logging will be a bit broken.",
     
-    "logs_registry_commands_begin": "Registering commands - working directory: ",
-    "logs_registry_commands_found": "Registered command: ",
-    "logs_registry_events_begin": "Registering events - working directory: ",
-    "logs_registry_events_found": "Registered event: ",
-    "logs_registry_interactions_begin": "Registering interactions - working directory: ",
-    "logs_registry_interactions_found": "Registered interaction: ",
+    "logs_registry_begin": "Registering from: ",
+    "logs_registry_found": "Registered: ",
+    "logs_registry_error": "Attempted to register something that isn't a command, without explicitly telling where to find it. Returning an empty collecion for now - very likely to casue an error/crash soon.",
     
     "logs_commands_removing": "Removing commands...",
     "logs_commands_removed": "Commands removed successfully! Boot the bot with the --deploy-commands flag to deploy them again.",
+    "logs_commands_remove_failed": "Failed to remove commands: ",
     "logs_commands_adding": "Deploying commands...",
-    "logs_commands_added": "Commands deployed successfully! They can be removed with the --remove-commands flag.",
+    "logs_commands_added": "Commands deployed successfully! They can be removed with the --remove-commands flag or re-deployed (after eg. an edit) with --deploy-commands again. Otherise, boot the bot without any flags to use your just-deployed commands.",
+    "logs_commands_add_failed": "Failed to add commands: ",
     "logs_commands_conflict": "You can't add and remove commands at the same time!",
-    "logs_commands_hint": "HINT: If you want your commands to be available in Discord, boot the bot with --deploy-commands. The bot will now exit - it's up to you to reboot it, with or without command support. This message will NOT be displayed again.",
     
     "logs_stop_cmd": "Bot has been stopped using a command by ",
     "logs_error": "An unexpected error occured and the bot has crashed. Check errors.txt file for more details.",
