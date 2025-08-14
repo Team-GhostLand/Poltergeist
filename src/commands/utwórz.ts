@@ -1,9 +1,7 @@
 import {
     ChatInputCommandInteraction,
-    Collection,
     PermissionsBitField,
-    SlashCommandBuilder,
-    TextChannel
+    SlashCommandBuilder
 } from "discord.js";
 
 import Bot from "../classes/Bot.js";
@@ -29,29 +27,13 @@ export const data = { ...new SlashCommandBuilder()
 
 export async function run(client: Bot, interaction: ChatInputCommandInteraction) {
     await interaction.deferReply({
-        ephemeral: true,
+        ephemeral: false,
     });
 
-    // Get channel to send the panel to
-    const channel = interaction.options.getChannel("kanał", true) as TextChannel;
-    // Get link to plan
-    const link = interaction.options.getString("link", true);
-
-    const output = new Collection; //await pdf2img.convert(link);
-    output.forEach(async (img: any, key) => {
-        await channel.send({
-            // @ts-ignore
-            files: [
-                {
-                    name: `plan-${key}.png`,
-                    attachment: Buffer.from(img),
-                },
-            ],
-        });
-    });
+    //TODO: Do stuff in the database here
 
     // Send success message
     await interaction.editReply({
-        content: `Wysłano **[wybrany PDF](${link})** na <#${channel.id}>!`,
+        content: `(odpowiedź testowa)`,
     });
 }
