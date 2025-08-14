@@ -64,9 +64,9 @@ export function logErrorMsg(msg: any, ...text: string[]): void {
     // Log in console
     console.log(chalk.bold.red("[ERROR]"), ...text, msg);
 
-    saveToFile("ERROR", ...text, msg.toJSON());
+    saveToFile("ERROR", ...text, JSON.stringify(msg));
     try{
-        logToWebhook("ERROR", ...text, msg.toJSON());
+        logToWebhook("ERROR", ...text, JSON.stringify(msg));
     }
     catch(e){
         logInfo(Strings.logs_logger_webhook_error)
