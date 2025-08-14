@@ -50,17 +50,17 @@ if (process.argv.includes("--deploy-commands")) {
     const commands: string[] = [];
     const rest = new REST().setToken(process.env.DISCORD_TOKEN as string);
     
-    (async () => {
-        try {
-            const appCommands = await loadHandlers(true);
-            appCommands.forEach((command) => commands.push(command.data.toJSON()));
-            await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: commands })
-        }
-        catch (e){
-            logErrorMsg(e, Strings.logs_commands_add_failed);
-            exit(1);
-        }
-    })
+    
+    try {
+        const appCommands = await loadHandlers(true);
+        appCommands.forEach((command) => commands.push(command.data.toJSON()));
+        await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: commands })
+    }
+    catch (e){
+        logErrorMsg(e, Strings.logs_commands_add_failed);
+        exit(1);
+    }
+    
     
     logInfo(Strings.logs_commands_added);
     exit(0);
