@@ -44,17 +44,18 @@ if (process.argv.includes("--deploy-commands")) {
     
     if (!process.env.CLIENT_ID || process.env.CLIENT_ID === "Bot client ID. Must be set to deploy/remove commands, otherwise useless."){
         logError(Strings.logs_commands_add_failed, "no client ID");
+        exit(1);
     }
 
     logInfo(Strings.logs_commands_adding);
     const commands: string[] = [];
-    const rest = new REST().setToken("REST");
+    const rest = new REST().setToken(process.env.DISCORD_TOKEN);
     
     (async () => {
         try {
             const appCommands = await loadHandlers(true);
             appCommands.forEach((command) => commands.push(command.data.toJSON()));
-            await rest.put(Routes.applicationCommands("CLI"), { body: commands })
+            await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: commands })
         }
         catch (e){
             logErrorMsg(e, Strings.logs_commands_add_failed);
@@ -68,6 +69,7 @@ if (process.argv.includes("--deploy-commands")) {
 else if (process.argv.includes("--remove-commands")) {
     if (!process.env.CLIENT_ID || process.env.CLIENT_ID === "Bot client ID. Must be set to deploy/remove commands, otherwise useless."){
         logError(Strings.logs_commands_remove_failed, "no client ID");
+        exit(1);
     }
     
     logInfo(Strings.logs_commands_removing);
@@ -75,7 +77,7 @@ else if (process.argv.includes("--remove-commands")) {
     
     (async () => {
         try {
-            await rest.put(Routes.applicationCommands("CLI"), { body: [] })
+            await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: [] })
         }
         catch (e){
             logErrorMsg(e, Strings.logs_commands_remove_failed);
