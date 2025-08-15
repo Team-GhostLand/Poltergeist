@@ -1,5 +1,6 @@
 import {
     ChatInputCommandInteraction,
+    MessageFlags,
     PermissionsBitField,
     SlashCommandBuilder
 } from "discord.js";
@@ -27,18 +28,17 @@ export const data = { ...new SlashCommandBuilder()
 };
 
 export async function run(client: Bot, interaction: ChatInputCommandInteraction) {
-    await interaction.deferReply({
-        ephemeral: false,
-    });
+    await interaction.deferReply({flags: MessageFlags.Ephemeral});
     
     try{
         const users = client.db.users;
+        const user  = interaction.user.id;
         const nick  = interaction.options.getString("nick", true);
         const uuid  = interaction.options.getString("uuid", false) || (await (await fetch("https://playerdb.co/api/player/minecraft/"+nick /*Let's pray that Discord does some basic sanitisation, like removing BCPSs, BELLs, NULLs, and anything else that doesn't belong in a URL (but shouldn't belong in a user-enterable command, either).*/)).json() as {data: {player: {id: string}}}).data.player.id;
         
-        if (await users.findUnique({ where: { discordsnowflakeid: interaction.user.id } })){
+        if (await users.findUnique({ where: { discordsnowflakeid: user } })){
             await interaction.editReply({
-                content: `Już zarejestrowano!`,
+                content: `Już zarejestrowano!`
             });
             return;
         }
@@ -57,14 +57,12 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
         }});
         
         await users.create({data: {
-            discordsnowflakeid: interaction.user.id,
+            discordsnowflakeid: user,
             mcname: nick,
             mcuuid: uuid
         }});
         
-        await interaction.editReply({
-            content: `Zarejestrowano! UUID: \`${uuid}\``,
-        });
+        await interaction.editReply({ content: (Strings.create_success_part1 + user + Strings.create_success_part2 + nick + Strings.create_success_part3 + uuid + Strings.create_success_part4) });
     }
     
     catch (e) {

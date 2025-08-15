@@ -37,6 +37,10 @@
     "create_description": "Tworzy konto GhostLand (tj. łączy gracza Minecraft i profil Discord w ekosystemie GhostLand)",
     "create_field_description_nick":"Twój nick w Minecraft. Wielkość liter, poprawne przepisanie, etc. mają znaczenie.",
     "create_field_description_uuid":"Obejście domyślnego UUID Mojangu. Wymagane tylko dla piratów.",
+    "create_success_part1":"✅ **Utworzono konto GhostLand!**\n*Powiązano z nim:*\n* Profil Discord: <@",
+        "create_success_part2":">;\n* Gracza Minecraft o nicku *",
+        "create_success_part3":"* i UUID `",
+        "create_success_part4":"`.\n\n__Teraz, możesz łączyć się z serwerem **bez błędu o nieobecności na whiteliście**!__\n*(\\*Odświeżenie whitelisty odbywa się co 60s; jeśli jeszcze ci nie działa - daj mu chwilkę. ||Jeśli cały czas ci nie działa, pingnij <@&986608874389901353>!||)*",
     
     "stop_description": "Bezpiecznie zatrzymuje bota.",
     "stop_stopping": "Zatrzymano!",
