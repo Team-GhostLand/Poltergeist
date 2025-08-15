@@ -21,17 +21,10 @@ export async function run(
     client: Bot,
     interaction: ChatInputCommandInteraction
 ) {
-    if (!process.env.PREVENT_REMOTE_SHUTDOWN){
-        await interaction.reply({
-            content: Strings.stop_stopping,
-            ephemeral: false
-        })
-        logInfo(Strings.logs_stop_cmd + (interaction.member as GuildMember).user.username)
-        exit(0, client);
-    }
-    
     await interaction.reply({
-        content: Strings.stop_disabled,
-        ephemeral: true
+        content: Strings.stop_stopping,
+        ephemeral: false
     })
+    logInfo(Strings.logs_stop_cmd + (interaction.member as GuildMember).user.username)
+    exit(0, client);
 }

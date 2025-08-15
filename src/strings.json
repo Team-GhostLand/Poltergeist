@@ -60,6 +60,5 @@
     "create_log_invalid": "Someone attempted to get a Mojang UUID from an invalid nickname.",
     
     "stop_description": "Bezpiecznie zatrzymuje bota.",
-    "stop_stopping": "Zatrzymano!",
-    "stop_disabled": "Funkcja wyłączona!"
+    "stop_stopping": "🛑 **Zatrzymano bota!**"
 }
