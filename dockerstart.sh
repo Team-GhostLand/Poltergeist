@@ -19,4 +19,5 @@ mv "./prisma/newschema.prisma" "./prisma/schema.prisma";
 
 #Apply Prisma changes & launch
 bun prodprisma;
+sleep 5; #Give the DB a moment to spin up.
 bun start;
