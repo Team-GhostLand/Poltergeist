@@ -21,7 +21,7 @@ model users {
     mcname              String @unique
     
     mcuser_whlist_entry whitelist       @relation(fields:[mcuuid], references: [uuid])
-    mcuser_account      minecraftusers? @relation(fields:[mcname], references: [username])
+  //mcuser_account      minecraftusers? @relation(fields:[mcname], references: [username])
 }
 
 model minecraftusers {
@@ -31,5 +31,5 @@ model minecraftusers {
     uuid           String? //varchar(255)
     data           String //json
     
-    dcuser         users?
+  //dcuser         users?
 }
