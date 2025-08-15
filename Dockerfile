@@ -10,11 +10,13 @@ FROM base AS install
 # this will cache them and speed up future builds
 RUN mkdir -p /temp/dev
 COPY package.json bun.lock /temp/dev/
+COPY prisma /temp/dev/prisma
 RUN cd /temp/dev && bun install --frozen-lockfile
 
 # install with --production (exclude devDependencies)
 RUN mkdir -p /temp/prod
 COPY package.json bun.lock /temp/prod/
+COPY prisma /temp/prod/prisma
 RUN cd /temp/prod && bun install --frozen-lockfile --production
 
 
