@@ -1,32 +1,35 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:../data/base.db"
+    provider = "sqlite"
+    url      = "file:../data/base.db"
 }
 
-model User {
-  id             String  @id
-  email          String  @unique
-  name           String
-  classId        Int
-
-  classInfo ClassInfo @relation(fields:[classId], references: [id])
-  outsiders Outsider[]
+model whitelist {
+    uuid         String @id //varchar(60)
+    name         String //varchar(20)
+    whitelisted  Int //tinyint
+    
+    dcuser       users?
 }
 
-model ClassInfo {
-  id        Int @id
-  members User[] //It's not needed for anything, but Prisma wouldn't work without an opposite relationsip.
+model users {
+    discordsnowflakeid  String @id
+    mcuuid              String @unique
+    mcname              String @unique
+    
+    mcuser_whlist_entry whitelist       @relation(fields:[mcuuid], references: [uuid])
+    mcuser_account      minecraftusers? @relation(fields:[mcname], references: [username])
 }
 
-model Outsider {
-  id        String   @id
-  username  String
-  createdAt DateTime @default(now())
-
-  addedBy   User   @relation(fields: [userId], references: [id])
-  userId    String
+model minecraftusers {
+    id             Int @id
+    username       String @unique //varchar(255)
+    username_lower String //varchar(255)
+    uuid           String? //varchar(255)
+    data           String //json
+    
+    dcuser         users?
 }
