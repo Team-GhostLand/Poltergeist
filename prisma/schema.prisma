@@ -4,12 +4,12 @@ generator client {
 
 datasource db {
     provider = "sqlite"
-    url      = "file:../data/base.db"
+    url      = env("DATABASE_URL")
 }
 
 model whitelist {
     uuid         String @id //varchar(60)
-    name         String //varchar(20)
+    name         String //varchar(255)
     whitelisted  Int //tinyint
     
     dcuser       users?

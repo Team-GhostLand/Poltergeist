@@ -29,7 +29,7 @@ if (!process.env.DISCORD_TOKEN || process.env.DISCORD_TOKEN === "Bot token. Must
     logError(Strings.logs_no_token);
     exit(1);
 }
-if (!process.env.LOGGER_WEBHOOK || process.env.LOGGER_WEBHOOK === "Webhook token for the error-logging webhook. Optional if you don't want to use this feature."){
+if (!process.env.LOGGER_WEBHOOK || process.env.LOGGER_WEBHOOK === "Webhook token for the error-logging webhook. Optional if you dont want to use this feature."){
     logError(Strings.logs_no_wh_token);
 }
 
