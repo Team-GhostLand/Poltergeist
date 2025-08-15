@@ -21,10 +21,7 @@ export async function run(
     client: Bot,
     interaction: ChatInputCommandInteraction
 ) {
-    await interaction.reply({
-        content: Strings.stop_stopping,
-        ephemeral: false
-    })
+    await interaction.reply({ content: Strings.stop_stopping })
     logInfo(Strings.logs_stop_cmd + (interaction.member as GuildMember).user.username)
     exit(0, client);
 }
