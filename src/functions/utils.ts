@@ -16,7 +16,7 @@ import chalk from "chalk";
 import { lstatSync, readdirSync } from "fs";
 import { join } from "path";
 import Bot from "../classes/Bot.js";
-import { logError, logInfo } from "./logger.js";
+import { logError, logErrorMsg, logInfo } from "./logger.js";
 
 import { mainCodeDir } from "index.js";
 import Strings from "../strings.json" with { type: "json" };
@@ -149,6 +149,12 @@ export async function handleError(
 
 export function exit(code: number, bot?: Bot){
     if(bot){
+        try{
+            bot.db.$disconnect();
+        }
+        catch (e){
+            logErrorMsg(e, Strings.logs_prisma_stop_failed)
+        }
         bot.destroy();
     }
     process.exit(code);
