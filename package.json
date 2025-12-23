@@ -1,7 +1,7 @@
 {
   "name": "poltergeist",
   "version": "0.0.1",
-  "description": "A bot written in Bun/DiscordJS/TypeScript for GhostLands's Discord (and (indirectly) Minecraft server.",
+  "description": "A bot written in Bun/DiscordJS/TypeScript for GhostLands's Discord (and (indirectly) Minecraft) server.",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
