@@ -1,6 +1,6 @@
 # ADAPTED FROM: https://gist.github.com/yaikohi/1d1f94a343d71857e0f73ef4a23dd071
 
-FROM oven/bun:1-alpine as base
+FROM oven/bun:1-debian as base
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
 WORKDIR /usr/src/app
