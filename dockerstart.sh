@@ -12,11 +12,6 @@ sed "s/sqlite/mysql/" "./prisma/schema.prisma" > "./prisma/newschema.prisma";
 rm "./prisma/schema.prisma";
 mv "./prisma/newschema.prisma" "./prisma/schema.prisma";
 
-#SED: String->Json
-sed "s|String //json|Json|" "./prisma/schema.prisma" > "./prisma/newschema.prisma";
-rm "./prisma/schema.prisma";
-mv "./prisma/newschema.prisma" "./prisma/schema.prisma";
-
 #Apply Prisma changes & launch
 bun prodprisma;
 sleep 5; #Give the DB a moment to spin up.
