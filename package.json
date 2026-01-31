@@ -1,6 +1,6 @@
 {
   "name": "poltergeist",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A bot written in Bun/DiscordJS/TypeScript for GhostLands's Discord (and (indirectly) Minecraft) server.",
   "main": "src/index.ts",
   "type": "module",
@@ -10,24 +10,24 @@
     "prodprisma": "bun x prisma generate",
     "start": "bun run ./src/index.ts"
   },
-  "author": "Team GhostLand; original version (Siedemnaskobot - a DC bot for 17LO Gdynia's Discord) developed by SimonB50, with an „assist” (-10x dev kind) by Guzio.",
+  "author": "Team GhostLand; original version (Siedemnaskobot - a DC bot for 17LO Gdynia's Discord) developed by SimonB50, with an „assist” (-10x dev kind - but I swear, I improved ince then) by Guzio.",
   "license": "MIT",
   "dependencies": {
-    "@prisma/client": "^5.3.0",
+    "@prisma/client": "^6.19.2",
     "chalk": "4.1.2",
-    "dayjs": "^1.11.7",
-    "discord.js": "^14.21.0",
-    "dotenv": "^16.0.3",
+    "dayjs": "^1.11.19",
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.2.3",
     "ms": "^2.1.3",
-    "strip-ansi": "^7.0.1",
-    "undici": "^5.22.0",
-    "ws": "^8.13.0"
+    "strip-ansi": "^7.1.2",
+    "undici": "^7.19.2",
+    "ws": "^8.19.0"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.4",
-    "@types/ms": "^0.7.31",
-    "@types/node": "^18.16.5",
-    "bun-types": "^1.2.20",
-    "prisma": "^5.3.0"
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/ms": "^2.1.0",
+    "@types/node": "^25.1.0",
+    "bun-types": "^1.3.8",
+    "prisma": "^6.19.2"
   }
 }
