@@ -1,0 +1,23 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/universal
+{
+	"name": "Default Linux Universal",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:noble",
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}, //For Dockerfile definitions
+		"ghcr.io/guziomg/devcontainers/bun:latest": {},          //Didn't work the last time I tried this due to the script installing as root, but I just noticed the remoteUser:"root" thing below, on this template. Maybe it will work now?
+		"ghcr.io/guziomg/devcontainers/personal:latest": {}      //I'm currently the only member of the org working on this - so screw it, imma add my own stuff.
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"prisma.prisma"
+			]
+		}
+	},
+
+	"remoteUser": "root"
+}
