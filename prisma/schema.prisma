@@ -9,16 +9,36 @@ datasource db {
 
 model whitelist {
     uuid         String @id //varchar(60)
-    name         String //varchar(255)
+    name         String //varchar(20)
     whitelisted  Int //tinyint
     
-    dcuser       users?
+    account      accounts? @relation("whitelisting")
 }
 
 model users {
-    discordsnowflakeid  String @id
-    mcuuid              String @unique
-    mcname              String @unique
+    discordsnowflakeid  String @id //varchar(25)
+	altOf String? //varchar(25)
+	invitedBy String //varchar(25)
+	approvedBy String? //varchar(25)
+	reason String?
+
+    mcaccounts accounts[] @relation("accounts_to_user")
+	main users? @relation("alts_to_main", fields:[altOf], references:[discordsnowflakeid])
+	alts users[] @relation("alts_to_main")
+	inviter users @relation("invites", fields:[invitedBy], references:[discordsnowflakeid])
+	invited users[] @relation("invites")
+	approver users? @relation("approval", fields:[approvedBy], references:[discordsnowflakeid])
+	approved users[] @relation("approval")
+}
+
+model accounts {
+    owner  String //varchar(25)
+    mcuuid String @unique //varchar(60)
+	altreason String?
+	playtime String
     
-    mcuser_whlist_entry whitelist       @relation(fields:[mcuuid], references: [uuid])
+    mcuser whitelist  @relation("whitelisting", fields:[mcuuid], references: [uuid])
+    user   users      @relation("accounts_to_user", fields:[owner], references: [discordsnowflakeid])
+
+	@@id([owner, mcuuid])
 }
