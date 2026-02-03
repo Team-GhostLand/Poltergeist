@@ -1,14 +1,16 @@
 import {
-    ButtonInteraction,
-    Channel,
-    Collection,
-    CommandInteraction,
-    EmbedBuilder,
-    Guild,
-    GuildMember,
-    Snowflake,
-    StringSelectMenuInteraction,
-    TextChannel
+	APIInteractionDataResolvedGuildMember,
+	APIInteractionGuildMember,
+	ButtonInteraction,
+	Channel,
+	Collection,
+	CommandInteraction,
+	EmbedBuilder,
+	Guild,
+	GuildMember,
+	Snowflake,
+	StringSelectMenuInteraction,
+	TextChannel
 } from "discord.js";
 import "dotenv/config";
 
@@ -195,4 +197,75 @@ export async function loadHandlers(isCommand: boolean, from?: { dir: string, dis
     }
     
     return output;
+}
+
+export async function getOrCreateUserFromId(client: Bot, id: string, reason: "JOIN_EVENT"|"TRUSTY_COMMAND"|"NORMAL_COMMAND"|"DANGLING_INVITER"|"BOT_ITSELF") {
+	let user = client.db.users.findUnique({ where: {discordsnowflakeid: id} });
+
+	if (!(await user)) {
+		logInfo("User " + id + " doesn't seem to have any GhostLand account at all - creating a new one for them (reason: " + reason + ")...");
+		
+		let trustReason;
+		if (reason === "TRUSTY_COMMAND") trustReason = Strings.trust_auto_command; //If you are able to run this bot's commands, you must've had the trusted role before, already. Either that, or someone issued a command on you that automatically implies trust (unlike NORMAL_COMMAND, which can happen under any circumstances), eg. the trust command-itself, or as part of some query that could realistically only happen if you're trusted.
+		else if (reason === "DANGLING_INVITER") trustReason = Strings.trust_auto_dangling_inviter; //If you were able to send invites, you must've had the trusted role before, already.
+		else if (id === client.user?.id || (!client.user && reason === "BOT_ITSELF" /*fallback*/)) trustReason = Strings.trust_auto_self; //The bot itself is always trusted.
+		
+		let approver;
+		if (trustReason){
+			approver = await getOrCreateUserFromId(client, client.user!.id, "BOT_ITSELF");
+			if (!approver) logError("Critical error: couldn't find or create the bot's own user entry in the database while trying to set it as approver for a new trusted user.");
+		}
+
+		user = client.db.users.create({data: {discordsnowflakeid: id, reason: trustReason, approvedBy: approver?.discordsnowflakeid, invitedBy: client.user!.id /*Temporary: setting the bot as inviter for all new users, until Discord gets their shit together. Turns out that their new special-little-pretty „Members” tab, that shows all sorts of very useful information, including who invited a given user, is not exposed via the bot API yet. AAAAAA! I wanted to have this beautiful recursive loop, where for this very func would be called for everyone up in the invite chain, thus doing automatic backfill for all from-the-old-system accounts, until we eventually find either someone who's already in the DB, or reach the „elders” (ppl so old that they weren't yet tracked by this system) and mark them as invited by this very bot. That's what the „DANGLING_INVITER” reason was for. But no; fuck me, I guess!!! Now everyone is marked as invited by this bot, and DANGLING_INVITER is itself dangling (ironic). Fuckin'... Thanks, Dick's Cord!*/}});
+
+		if (!(await user)){
+			logError("Critical error: couldn't create a new GhostLand user entry in the database for user " + id);
+		} else{
+			logInfo("Successfully created a new GhostLand user entry in the database for user " + id);
+		};
+	}
+
+	return user;
+}
+
+export async function getOrCreateUserAndSyncTrust(client: Bot, member: GuildMember|APIInteractionGuildMember|APIInteractionDataResolvedGuildMember|null|undefined, reason: "JOIN_EVENT"|"TRUSTY_COMMAND"|"NORMAL_COMMAND"|"DANGLING_INVITER"|"BOT_ITSELF") {
+	const uid = !member ? null : ("id" in member ? member.id : ( "user" in member ? member.user.id : null));
+	
+	if (!uid || !member) {
+		let nick = (member as APIInteractionGuildMember|APIInteractionDataResolvedGuildMember|null|undefined)?.nick
+		if (!nick) nick = "nor even a nickname, for that matter - so there is no way to even debug whose weird-ass privacy settings caused this"; 
+		logError("Critical error: getOrCreateUserAndSyncTrust was passed a member for whom no SnowflakeID could be extracted ("+nick+"), when processing "+reason+". Likely a null/undefined, an APIInteractionGuildMember (created as part of a MESSAGE_CREATE or MESSAGE_UPDATE) gateway event, or an APIInteractionDataResolvedGuildMember.");
+		return null;
+	}
+
+	const user = await getOrCreateUserFromId(client, uid, reason);
+	if (!user) return user;
+	const approvalReason = (user.approvedBy || (user.altOf + " (as alt)"))+" because of: "+user.reason;
+
+	if (Array.isArray(member.roles)) {
+		logError("An APIInteractionGuildMember or APIInteractionDataResolvedGuildMember of user " + uid + " was passed to getOrCreateUserAndSyncTrust (when processing "+reason+"), instead of a GuildMember. User was returned, but roles sync will not be performed -> consider using a simpler getOrCreateUserFromId instead.");
+		return user;
+	}
+
+	if (user.approvedBy) {
+		if (!member.roles.cache.has(Strings.trusted_role)) {
+			logInfo("User " + uid + " is now trusted (reason: " + reason + " // thanks to " + approvalReason + "). Adding trusted role.");
+			member.roles.add(Strings.trusted_role);
+		}
+		if (member.roles.cache.has(Strings.untrusted_role)) {
+			logInfo("User " + uid + " is no longer untrusted (reason: " + reason + " // thanks to " + approvalReason + "). Removing untrusted role.");
+			member.roles.remove(Strings.untrusted_role);
+		}
+	} else {
+		if (member.roles.cache.has(Strings.trusted_role)) {
+			logInfo("User " + uid + " is not trusted (reason: " + reason + "). Removing trusted role.");
+			member.roles.remove(Strings.trusted_role);
+		}
+		if (!member.roles.cache.has(Strings.untrusted_role)) {
+			logInfo("User " + uid + " is not trusted (reason: " + reason + "). Adding untrusted role.");
+			member.roles.add(Strings.untrusted_role);
+		}
+	}
+
+	return user;
 }
