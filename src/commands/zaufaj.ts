@@ -35,7 +35,9 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 		const sender  = (await getOrCreateUserAndSyncTrust(client, interaction.member, "TRUSTY_COMMAND")).resolved;
 		const target  = await interaction.guild?.members.fetch(interaction.options.getUser("komu", true));
 		const reason  = interaction.options.getString("ponieważ", true);
+		const target_solved  = (await getOrCreateUserAndSyncTrust(client, target, "NORMAL_COMMAND")).resolved;
 		
+		//Technical guard-closes
 		if (!sender) {
 			logError(Strings.trustcmd_log_no_sender);
 			await interaction.editReply({ content: Strings.trustcmd_error_public });
@@ -45,12 +47,27 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 			logError(Strings.trustcmd_log_no_guild);
 			await interaction.editReply({ content: Strings.trustcmd_error_no_guild });
 			return;
-		} else if (!(await getOrCreateUserAndSyncTrust(client, target, "NORMAL_COMMAND"))) {
+		} else if (!target_solved) {
 			logError(Strings.trustcmd_log_no_target);
 			await interaction.editReply({ content: Strings.trustcmd_error_public });
 			return;
 		} else {
 			logCommand(interaction.member?.user.username + Strings.trustcmd_log_approves_part1 + target.user.username + Strings.trustcmd_log_approves_part2 + reason);
+		}
+
+		//Logical guard-closes
+		if (sender.discordsnowflakeid === target_solved.invitedBy) {
+			logInfo(Strings.trustcmd_log_2userrule_violation);
+			await interaction.editReply({ content: Strings.trustcmd_error_2userrule_violation });
+			return;
+		} else if ((target_solved.approvedBy || target_solved.altOf) && target_solved.reason){
+			logInfo(Strings.trustcmd_log_already_trusted);
+			await interaction.editReply({ content: Strings.trustcmd_error_already_trusted });
+			return;
+		} else if (sender.altOf){
+			logInfo(Strings.trustcmd_log_is_alt);
+			await interaction.editReply({ content: Strings.trustcmd_error_is_alt });
+			return;
 		}
 
 		await users.update({
