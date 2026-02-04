@@ -217,10 +217,12 @@ export async function getOrCreateUserFromId(client: Bot, id: string, reason: "JO
 		}
 
 		let err: string|unknown = "[UNKNOWN ERROR]";
-		try {
-			user = client.db.users.create({data: {discordsnowflakeid: id, reason: trustReason, approvedBy: approver?.discordsnowflakeid, invitedBy: client.user!.id /*Temporary: setting the bot as inviter for all new users, until Discord gets their shit together. Turns out that their new special-little-pretty „Members” tab, that shows all sorts of very useful information, including who invited a given user, is not exposed via the bot API yet. AAAAAA! I wanted to have this beautiful recursive loop, where for this very func would be called for everyone up in the invite chain, thus doing automatic backfill for all from-the-old-system accounts, until we eventually find either someone who's already in the DB, or reach the „elders” (ppl so old that they weren't yet tracked by this system) and mark them as invited by this very bot. That's what the „DANGLING_INVITER” reason was for. But no; fuck me, I guess!!! Now everyone is marked as invited by this bot, and DANGLING_INVITER is itself dangling (ironic). Fuckin'... Thanks, Dick's Cord!*/}});	
-		} catch (e) {
-			err = e;
+		user = client.db.users.create({data: {discordsnowflakeid: id, reason: trustReason, approvedBy: approver?.discordsnowflakeid, invitedBy: client.user!.id /*Temporary: setting the bot as inviter for all new users, until Discord gets their shit together. Turns out that their new special-little-pretty „Members” tab, that shows all sorts of very useful information, including who invited a given user, is not exposed via the bot API yet. AAAAAA! I wanted to have this beautiful recursive loop, where for this very func would be called for everyone up in the invite chain, thus doing automatic backfill for all from-the-old-system accounts, until we eventually find either someone who's already in the DB, or reach the „elders” (ppl so old that they weren't yet tracked by this system) and mark them as invited by this very bot. That's what the „DANGLING_INVITER” reason was for. But no; fuck me, I guess!!! Now everyone is marked as invited by this bot, and DANGLING_INVITER is itself dangling (ironic). Fuckin'... Thanks, Dick's Cord!*/}});	
+		const userErrorable = user.catch((e) => {err = e; return null;});
+
+		if (!(await userErrorable)) {
+			/**@ts-ignore */
+			user = userErrorable;
 		}
 
 		if (!(await user)){
