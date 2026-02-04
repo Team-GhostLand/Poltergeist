@@ -12,7 +12,7 @@ import Strings from "../strings.json" with { type: "json" };
 
 export const data = {
 	...new SlashCommandBuilder()
-		.setName("utwórz")
+		.setName("whitelistuj")
 		.setDescription(Strings.whitelist_description)
 		.setDefaultMemberPermissions(PermissionsBitField.Flags.UseApplicationCommands)
 		.setDMPermission(false)

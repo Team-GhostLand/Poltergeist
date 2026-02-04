@@ -12,7 +12,7 @@ import Strings from "../../strings.json" with { type: "json" };
 
 export const data = {
 	...new SlashCommandBuilder()
-		.setName("utwórz")
+		.setName("migruj")
 		.setDescription(Strings.migrate_description)
 		.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
 		.setDMPermission(false)

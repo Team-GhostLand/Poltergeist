@@ -10,7 +10,7 @@ import Bot from "../classes/Bot.js";
 import Strings from "../strings.json" with { type: "json" };
 
 export const data = { ...new SlashCommandBuilder()
-	.setName("zaufaj")
+	.setName("dodaj-alt")
 	.setDescription(Strings.addalt_description)
 	.setDefaultMemberPermissions(PermissionsBitField.Flags.UseApplicationCommands)
 	.setDMPermission(false)
