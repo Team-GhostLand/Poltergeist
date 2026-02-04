@@ -81,11 +81,35 @@
     "trustcmd_log_no_sender":"Error while setting a user as trusted: It either wasn't - for whatever reason - possible to get/create the sender's GhostLand account, or the command was somehow executed without a sender (which should NOT be possible under any sensible circumstances, but `interaction.member` is apparently nullable, so either DiscordJS is stupid, or it somehow is possible for a command to, fkin'... Manifest itself, or something).",
     "trustcmd_log_no_target":"Error while setting a user as trusted: It wasn't possible to get/create the target's GhostLand account.",
     "trustcmd_log_approves_part1": " used a command to trust user ",
-    "trustcmd_log_approves_part2": ". User-specified reason: ",
+    	"trustcmd_log_approves_part2": ". User-specified reason: ",
     "trustcmd_log_2userrule_violation": "...but it didn't go through because they were trying to trust someone they invited themselves.",
     "trustcmd_log_already_trusted": "...but the target user is already trusted.",
     "trustcmd_log_is_alt": "...but it didn't go through because the sender is an alt-account.",
     "trustcmd_log_success": " is now trusted.",
+
+
+    "addalt_description": "Przyznaje rolę @Zaufaniec dla twojego alt-konta.",
+    "addalt_field_description_target":"Użytkownik, którego chcesz podpiąć jako alt.",
+    "addalt_field_description_reason":"Po co ci alt, hmm? Chyba nie chcesz łamać zasad, spryciarzu?",
+    "addalt_success_part1":"☑️ Podpięto nowe alt-konto: <@",
+        "addalt_success_part2":">\n\n||*Wyjaśnienie:* `",
+        "addalt_success_part3":"`||",
+	"addalt_error_must_same_user":"⚠️ **Proszę samemu zaprosić tego użytkownika!**\nTylko użytkowników zaproszonych przez Ciebie, można ustawić jako Twój alt.\n\n*Przepraszamy za utrudnienia - to bardzo podstawowe zabezpieczenie przed „podkradaniem” cudzych kont.*",
+	"addalt_error_already_trusted":"❌ Ten użytkownik jest już zaufany, albo jako cudzy alt, albo jako pełnoprawne konto.",
+	"addalt_error_is_alt":"❌ **Alt-konta nie mogą podpinać innych alt-kont!**\nZaloguj się na swoje główne konto na Discordzie, aby dodać kolejny alt.\n\n*Przepraszamy za utrudnienia - ta limitacja wynika z wewnętrznej organizacji naszych systemów.*",
+	"addalt_error_no_guild":"⚠️ **Bot musi być zainstalowany na serwerze**, aby oznaczyć użytkownika jako alt, gdyż w ramach tego przyznawane są role. Nie możesz wykonać tej komendy na kliencie (ie. w DMach, zwykłych group-chatach, lub na serwerach bez bota).\n*Jakim cudem udało ci się go w ogóle zainstalować go na kliencie, anyway? Blokujemy instalacje klientowe. xD*\n\nJeśli na 10000000% procent wykonujesz tę komendę na serwerze z obecnym botem, to natychmiast pingnij <@&986608874389901353>, bo coś poszło bardzo, bardzo źle.",
+    "addalt_error_public":"❌ **Nieznany błąd!!!**\n*To się nigdy nie powinno stać! Natychmiast pingnij <@&986608874389901353>!*",
+    
+    "addalt_log_error":"Error while setting a user as alt: ",
+    "addalt_log_no_guild":"Error while setting a user as alt: Either some idiot ran this command user-side, or the command was somehow executed without a target (which shouldn't be possible, given how that's a required argument, but maybe the sender used some client-side mods shenanigans to bypass Discord's command requirements).",
+    "addalt_log_no_sender":"Error while setting a user as alt: It either wasn't - for whatever reason - possible to get/create the sender's GhostLand account, or the command was somehow executed without a sender (which should NOT be possible under any sensible circumstances, but `interaction.member` is apparently nullable, so either DiscordJS is stupid, or it somehow is possible for a command to, fkin'... Manifest itself, or something).",
+    "addalt_log_no_target":"Error while setting a user as alt: It wasn't possible to get/create the target's GhostLand account.",
+    "addalt_log_approves_part1": " used a command to set user ",
+    	"addalt_log_approves_part2": " as an alt. User-specified reason: ",
+    "addalt_log_must_same_user": "...but it didn't go through because they were trying to set someone they didn't invite as an alt.",
+    "addalt_log_already_trusted": "...but the target user is already trusted.",
+    "addalt_log_is_alt": "...but it didn't go through because the sender is an alt-account.",
+    "addalt_log_success": " is now an alt.",
 
 
 

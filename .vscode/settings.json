@@ -13,6 +13,8 @@
 	},
 	"prisma.pinToPrisma6": true,
 	"cSpell.words": [
+		"2userrule",
+		"addalt",
 		"altreason",
 		"BCSPs",
 		"Bootin",
@@ -35,7 +37,6 @@
 		"randomy",
 		"tinyint",
 		"trustcmd",
-		"2userrule",
 		"varchar",
 		"whiteliście",
 		"whitelisty",

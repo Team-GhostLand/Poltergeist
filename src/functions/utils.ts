@@ -264,7 +264,7 @@ export async function getOrCreateUserAndSyncTrust(client: Bot, member: GuildMemb
 		return {raw: userRaw, resolved: user};
 	}
 
-	if (user.approvedBy) {
+	if ((user.approvedBy || user.altOf) && user.reason) {
 		if (!member.roles.cache.has(Strings.trusted_role)) {
 			logInfo("User " + uid + " is now trusted (reason: " + reason + " // thanks to " + approvalReason + "). Adding trusted role.");
 			member.roles.add(Strings.trusted_role);
