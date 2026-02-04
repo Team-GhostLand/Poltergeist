@@ -201,6 +201,7 @@ export async function loadHandlers(isCommand: boolean, from?: { dir: string, dis
 
 export async function getOrCreateUserFromId(client: Bot, id: string, reason: "JOIN_EVENT"|"TRUSTY_COMMAND"|"NORMAL_COMMAND"|"DANGLING_INVITER"|"BOT_ITSELF") {
 	let user = client.db.users.findUnique({ where: {discordsnowflakeid: id} });
+	if (id === client.user?.id) { reason = "BOT_ITSELF"; } //Just in case someone tries to call this function for the bot itself with some other reason.
 
 	if (!(await user)) {
 		logInfo("User " + id + " doesn't seem to have any GhostLand account at all - creating a new one for them (reason: " + reason + ")...");
@@ -208,16 +209,24 @@ export async function getOrCreateUserFromId(client: Bot, id: string, reason: "JO
 		let trustReason;
 		if (reason === "TRUSTY_COMMAND") trustReason = Strings.trust_auto_command; //If you are able to run this bot's commands, you must've had the trusted role before, already. Either that, or someone issued a command on you that automatically implies trust (unlike NORMAL_COMMAND, which can happen under any circumstances), eg. the trust command-itself, or as part of some query that could realistically only happen if you're trusted.
 		else if (reason === "DANGLING_INVITER") trustReason = Strings.trust_auto_dangling_inviter; //If you were able to send invites, you must've had the trusted role before, already.
-		else if (id === client.user?.id || (!client.user && reason === "BOT_ITSELF" /*fallback*/)) trustReason = Strings.trust_auto_self; //The bot itself is always trusted.
+		else if (reason === "BOT_ITSELF") trustReason = Strings.trust_auto_self; //The bot itself is always trusted.
 		
 		let approver;
 		if (trustReason){
-			approver = (await getOrCreateUserFromId(client, client.user!.id, "BOT_ITSELF")).resolved;
+			if (reason !== "BOT_ITSELF") approver = (await getOrCreateUserFromId(client, client.user!.id, "BOT_ITSELF")).resolved?.discordsnowflakeid;
+			else approver = id; //The bot is approving itself. Can't use getOrCreateUserFromId again, or we'll end up in an infinite loop.
+
 			if (!approver) logError("Critical error: couldn't find or create the bot's own user entry in the database while trying to set it as approver for a new trusted user.");
 		}
 
+		let inviter = client.user!.id; /*Temporary: setting the bot as inviter for all new users, until Discord gets their shit together. Turns out that their new special-little-pretty „Members” tab, that shows all sorts of very useful information, including who invited a given user, is not exposed via the bot API yet. AAAAAA! I wanted to have this beautiful recursive loop, where for this very func would be called for everyone up in the invite chain, thus doing automatic backfill for all from-the-old-system accounts, until we eventually find either someone who's already in the DB, or reach the „elders” (ppl so old that they weren't yet tracked by this system) and mark them as invited by this very bot. That's what the „DANGLING_INVITER” reason was for. But no; fuck me, I guess!!! Now everyone is marked as invited by this bot, and DANGLING_INVITER is itself dangling (ironic). Fuckin'... Thanks, Dick's Cord!*/;
+		if ((inviter === client.user?.id) && (reason !== "BOT_ITSELF")){
+			//This is all done to ensure that the bot will exist, if set as a fallback for unresolvable invites (which - as stated above - is currently all of them). Without this check, we end up running into FKey concerns. The „don't do this if the reason is BOT_ITSELF”-check is there to ensure we don't run into an infinite loop of the bot trying to create an account for itself.
+			if (!((await getOrCreateUserFromId(client, client.user!.id, "BOT_ITSELF")).resolved)) logError("Critical error: couldn't find or create the bot's own user entry in the database while trying to set it as inviter for a user with an unknown invite.");
+		}
+
 		let err: string|unknown = "[UNKNOWN ERROR]";
-		user = client.db.users.create({data: {discordsnowflakeid: id, reason: trustReason, approvedBy: approver?.discordsnowflakeid, invitedBy: client.user!.id /*Temporary: setting the bot as inviter for all new users, until Discord gets their shit together. Turns out that their new special-little-pretty „Members” tab, that shows all sorts of very useful information, including who invited a given user, is not exposed via the bot API yet. AAAAAA! I wanted to have this beautiful recursive loop, where for this very func would be called for everyone up in the invite chain, thus doing automatic backfill for all from-the-old-system accounts, until we eventually find either someone who's already in the DB, or reach the „elders” (ppl so old that they weren't yet tracked by this system) and mark them as invited by this very bot. That's what the „DANGLING_INVITER” reason was for. But no; fuck me, I guess!!! Now everyone is marked as invited by this bot, and DANGLING_INVITER is itself dangling (ironic). Fuckin'... Thanks, Dick's Cord!*/}});	
+		user = client.db.users.create({data: {discordsnowflakeid: id, reason: trustReason, approvedBy: approver, invitedBy: inviter}});	
 		const userErrorable = user.catch((e) => {err = e; return null;});
 
 		if (!(await userErrorable)) {
