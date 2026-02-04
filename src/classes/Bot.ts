@@ -13,7 +13,7 @@ export default class Bot extends Client {
     commands: Collection<string, any>;
     interactions: Collection<string, any>;
     db: PrismaClient;
-    interted_token: string;
+    inserted_token: string;
     
     constructor(token: string) {
         super({
@@ -21,6 +21,7 @@ export default class Bot extends Client {
                 GatewayIntentBits.Guilds,
                 GatewayIntentBits.GuildIntegrations,
                 GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.GuildMembers,
                 GatewayIntentBits.MessageContent,
             ],
         });
@@ -28,7 +29,7 @@ export default class Bot extends Client {
         this.commands = new Collection();
         this.interactions = new Collection();
         this.db = new PrismaClient();
-        this.interted_token = token;
+        this.inserted_token = token;
     }
   
     async start() {
@@ -40,7 +41,7 @@ export default class Bot extends Client {
         await new ErrorHandler(this).preventErrors();
         
         try {
-            await this.login(this.interted_token)
+            await this.login(this.inserted_token)
         }
         catch (e) {
             logErrorMsg(e, Strings.logs_error_startup)

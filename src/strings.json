@@ -6,13 +6,13 @@
     "logs_startup_done": " is ready to use!",
     "logs_error_startup": "Bot startup failed:\n",
     
-    "logs_logger_init_failed": "CRITICAL STARTUP ERROR: COULDN'T INITIALISE THE LOGGER:\n",
+    "logs_logger_init_failed": "CRITICAL STARTUP ERROR: COULDN'T INITIALIZE THE LOGGER:\n",
     "logs_no_token": "No token has been provided! The bot will now exit.",
     "logs_no_wh_token": "No webhook token has been provided! Error logging will be a bit broken.",
     
     "logs_registry_begin": "Registering from: ",
     "logs_registry_found": "Registered: ",
-    "logs_registry_error": "Attempted to register something that isn't a command, without explicitly telling where to find it. Returning an empty collecion for now - very likely to casue an error/crash soon.",
+    "logs_registry_error": "Attempted to register something that isn't a command, without explicitly telling where to find it. Returning an empty collection for now - very likely to cause an error/crash soon.",
     
     "logs_prisma_stop_failed": "Couldn't disconnect from Prisma:\n",
     
@@ -23,14 +23,14 @@
     "logs_commands_listed": "Commands listed successfully!",
     "logs_commands_list_failed": "Failed to list commands:\n",
     "logs_commands_adding": "Deploying commands...",
-    "logs_commands_added": "Commands deployed successfully! They can be removed with the --remove-commands flag or re-deployed (after eg. an edit) with --deploy-commands again. Otherise, boot the bot without any flags to use your just-deployed commands.",
+    "logs_commands_added": "Commands deployed successfully! They can be removed with the --remove-commands flag or re-deployed (after eg. an edit) with --deploy-commands again. Otherwise, boot the bot without any flags to use your just-deployed commands.",
     "logs_commands_add_failed": "Failed to add commands:\n",
     "logs_commands_conflict": "You can't add, list and remove commands at the same time!",
     
     "logs_stop_cmd": "Bot has been stopped using a command by ",
     "logs_stop_ctrlc": "Exiting.",
-    "logs_error_fatal": "An unexpected error occured and the bot has crashed. Check errors.txt file for more details.",
-    "logs_error": "An unexpected error occured! Check errors.txt file for more details.",
+    "logs_error_fatal": "An unexpected error occurred and the bot has crashed. Check errors.txt file for more details.",
+    "logs_error": "An unexpected error occurred! Check errors.txt file for more details.",
     
     
     
@@ -47,10 +47,10 @@
         "create_known_discord_part2":">) jest już kontem GhostLand; nie możesz utworzyć na nim konta ponownie. *(Jeśli próbujesz zmienić podpiętego do tego konta gracza Minecraft, skontaktuj się z administracją.)*",
     "create_known_mcname_part1":"Gracz Minecraft o nicku *",
         "create_known_mcname_part2":"* jest już powiązany z następującym kontem GhostLand: <@",
-        "create_known_mcname_part3":">, więc nie możesz powiązać go z tym. *(Jeśli próbujesz zmigrować swój profil Minecraft do nowgo konta GhostLand, skontaktuj się z administracją.)*",
+        "create_known_mcname_part3":">, więc nie możesz powiązać go z tym. *(Jeśli próbujesz zmigrować swój profil Minecraft do nowego konta GhostLand, skontaktuj się z administracją.)*",
     "create_known_mcuuid_part1":"Gracz Minecraft o UUID `",
         "create_known_mcuuid_part2":"` jest już powiązany z następującym kontem GhostLand: <@",
-        "create_known_mcuuid_part3":">, więc nie możesz powiązać go z tym. *(Jeśli próbujesz zmigrować swój profil Minecraft do nowgo konta GhostLand, skontaktuj się z administracją.)*",
+        "create_known_mcuuid_part3":">, więc nie możesz powiązać go z tym. *(Jeśli próbujesz zmigrować swój profil Minecraft do nowego konta GhostLand, skontaktuj się z administracją.)*",
     "create_known_combiner":"\n* ",
     "create_error_public":"❌ **Nieznany błąd!!!**\n*To się nigdy nie powinno stać! Natychmiast pingnij <@&986608874389901353>!*",
     
@@ -59,6 +59,42 @@
     "create_log_known": "Someone attempted to reuse their GhostLand account and got the following errors:",
     "create_log_invalid": "Someone attempted to get a Mojang UUID from an invalid nickname.",
     
+
     "stop_description": "Bezpiecznie zatrzymuje bota.",
-    "stop_stopping": "🛑 **Zatrzymano bota!**"
+    "stop_stopping": "🛑 **Zatrzymano bota!**",
+    
+	
+    "trustcmd_description": "Przyznaje rolę @Zaufaniec. Prosimy NIE używać tego na własnych alt-kontach - od tego jest /dodaj-alt",
+    "trustcmd_field_description_target":"Użytkownik, któremu próbujesz zaufać.",
+    "trustcmd_field_description_reason":"Powód tego zaufania (np. „To moje rodzeństwo”; „Znajomy ze studiów”, etc.).",
+    "trustcmd_success_part1":"✅ **Zaufano** użytkownikowi <@",
+        "trustcmd_success_part2":">\n\n||*Powód:* `",
+        "trustcmd_success_part3":"`||",
+	"trustcmd_error_2userrule_violation":"❌ **Nie można zaufać użytkownikom, których się samemu zaprosiło!**\n* Jeśli to twój alt - użyj komendy `/dodaj-alt`.\n* Jeśli to ktoś zaufany z twojego otoczenia - poproś kogoś innego, kto go zna, żeby go potwierdził. Jeśli nikt go nie zna, poproś kogoś, kto już *ciebie* dobrze zna, i może za ciebie ręczyć, że raczej nie zaprosisz złych ludzi.\n\n*Przepraszamy, jeśli jest to trochę niewygodne. Taki system pozwala nam uniknąć sytuacji typu „randomy-zapraszają-randomy” - bo albo potrzeba, by dana osoba była znana przez min. dwie inne (zapraszający+weryfikujący), więc nie jest specjalnie „randomem” - albo wymusza, by oryginalny zapraszający nie był relatywnie znany przez społeczność (więc wtedy to on, z kolei, nie jest „randomem”).*",
+	"trustcmd_error_already_trusted":"⚠️ Ten użytkownik jest już zaufany.",
+	"trustcmd_error_is_alt":"❌ **Alt-konta nie mogą ufać użytkownikom!**\nZaloguj się na swoje główne konto na Discordzie, aby zweryfikować kogoś.\n\n*Przepraszamy za utrudnienia - ta limitacja wynika z wewnętrznej organizacji naszych systemów.*",
+	"trustcmd_error_no_guild":"⚠️ **Bot musi być zainstalowany na serwerze**, aby zaufać użytkownikowi, gdyż w ramach tego przyznawane są role. Nie możesz wykonać tej komendy na kliencie (ie. w DMach, zwykłych group-chatach, lub na serwerach bez bota).\n*Jakim cudem udało ci się go w ogóle zainstalować go na kliencie, anyway? Blokujemy instalacje klientowe. xD*\n\nJeśli na 10000000% procent wykonujesz tę komendę na serwerze z obecnym botem, to natychmiast pingnij <@&986608874389901353>, bo coś poszło bardzo, bardzo źle.",
+    "trustcmd_error_public":"❌ **Nieznany błąd!!!**\n*To się nigdy nie powinno stać! Natychmiast pingnij <@&986608874389901353>!*",
+    
+    "trustcmd_log_error":"Error while setting a user as trusted: ",
+    "trustcmd_log_no_guild":"Error while setting a user as trusted: Either some idiot ran this command user-side, or the command was somehow executed without a target (which shouldn't be possible, given how that's a required argument, but maybe the sender used some client-side mods shenanigans to bypass Discord's command requirements).",
+    "trustcmd_log_no_sender":"Error while setting a user as trusted: It either wasn't - for whatever reason - possible to get/create the sender's GhostLand account, or the command was somehow executed without a sender (which should NOT be possible under any sensible circumstances, but `interaction.member` is apparently nullable, so either DiscordJS is stupid, or it somehow is possible for a command to, fkin'... Manifest itself, or something).",
+    "trustcmd_log_no_target":"Error while setting a user as trusted: It wasn't possible to get/create the target's GhostLand account.",
+    "trustcmd_log_approves_part1": " used a command to trust user ",
+    "trustcmd_log_approves_part2": ". User-specified reason: ",
+    "trustcmd_log_2userrule_violation": "...but it didn't go through because they were trying to trust someone they invited themselves.",
+    "trustcmd_log_already_trusted": "...but the target user is already trusted.",
+    "trustcmd_log_is_alt": "...but it didn't go through because the sender is an alt-account.",
+    "trustcmd_log_success": " is now trusted.",
+
+
+
+	"trust_auto_dangling_inviter": "Bot automatycznie zaufał temu użytkownikowi, bo zaprosił on wcześniej kogoś. Tylko @Zaufańcy mają permisje do zapraszania, więc ten użytkownik jest zaufany; po prostu musi pochodzić ze starego systemu i nie było to jeszcze odnotowane w bazie danych.",
+	"trust_auto_command": "Bot automatycznie zaufał temu użytkownikowi, bo wykonał on jakąkolwiek komendę. Tylko @Zaufańcy mają permisje do komend, więc ten użytkownik jest zaufany; po prostu musi pochodzić ze starego systemu i nie było to jeszcze odnotowane w bazie danych. Either that, lub została na nim wykonana komenda dająca zaufanie (np. samo /zaufaj - chociaż wtedy ta auto-generowana wiadomość nie powinna się pojawić, a powód podany przy /ufaniu, więc też coś musiało pójść mildly wrong) lub jakaś administracyjna sugerująca zaufanie.",
+	"trust_auto_self": "Jezu, ufam Sobie ;-)",
+	
+	"trusted_role": "1468623538461216869",
+	"untrusted_role": "1467236642208219218",
+	"gl_trusted_role": "966398639809396847",
+	"gl_untrusted_role": "1261771958815686656"
 }

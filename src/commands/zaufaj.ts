@@ -37,7 +37,7 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 		const reason  = interaction.options.getString("ponieważ", true);
 		const target_solved  = (await getOrCreateUserAndSyncTrust(client, target, "NORMAL_COMMAND")).resolved;
 		
-		//Technical guard-closes
+		//Technical guard-clauses
 		if (!sender) {
 			logError(Strings.trustcmd_log_no_sender);
 			await interaction.editReply({ content: Strings.trustcmd_error_public });
@@ -55,7 +55,7 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 			logCommand(interaction.member?.user.username + Strings.trustcmd_log_approves_part1 + target.user.username + Strings.trustcmd_log_approves_part2 + reason);
 		}
 
-		//Logical guard-closes
+		//Logical guard-clauses
 		if (sender.discordsnowflakeid === target_solved.invitedBy) {
 			logInfo(Strings.trustcmd_log_2userrule_violation);
 			await interaction.editReply({ content: Strings.trustcmd_error_2userrule_violation });

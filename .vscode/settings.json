@@ -1,16 +1,46 @@
 {
-    "files.exclude": {
-        ".idea/shelf/": true,
-        ".idea/workspace.xml": true,
-        ".idea/httpRequests/": true,
-        ".idea/dataSources/": true,
-        ".idea/dataSources.local.xml": true
-    },
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit",
-        "source.organizeImports": "explicit"
+	"files.exclude": {
+		".idea/shelf/": true,
+		".idea/workspace.xml": true,
+		".idea/httpRequests/": true,
+		".idea/dataSources/": true,
+		".idea/dataSources.local.xml": true
+	},
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.organizeImports": "explicit"
 	},
 	"prisma.pinToPrisma6": true,
+	"cSpell.words": [
+		"altreason",
+		"BCSPs",
+		"Bootin",
+		"discordsnowflakeid",
+		"Discordzie",
+		"dont",
+		"Errorable",
+		"fkin",
+		"Fuckin",
+		"klientowe",
+		"logfile",
+		"mcaccounts",
+		"mcname",
+		"mcuser",
+		"mcuuid",
+		"Mojang",
+		"Mojangu",
+		"pingnij",
+		"randomem",
+		"randomy",
+		"tinyint",
+		"trustcmd",
+		"2userrule",
+		"varchar",
+		"whiteliście",
+		"whitelisty",
+		"Zaufańcy",
+		"Zaufaniec",
+		"zmigrować"
+	],
 }
