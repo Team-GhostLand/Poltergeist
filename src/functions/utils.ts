@@ -251,17 +251,17 @@ export async function getOrCreateUserAndSyncTrust(client: Bot, member: GuildMemb
 		let nick = (member as APIInteractionGuildMember|APIInteractionDataResolvedGuildMember|null|undefined)?.nick
 		if (!nick) nick = "nor even a nickname, for that matter - so there is no way to even debug whose weird-ass privacy settings caused this"; 
 		logError("Critical error: getOrCreateUserAndSyncTrust was passed a member for whom no SnowflakeID could be extracted ("+nick+"), when processing "+reason+". Likely a null/undefined, an APIInteractionGuildMember (created as part of a MESSAGE_CREATE or MESSAGE_UPDATE) gateway event, or an APIInteractionDataResolvedGuildMember.");
-		return {raw: new Promise((resolve, reject) => {resolve(null);}), resolved: null};
+		return {raw: new Promise((resolve, reject) => {resolve(null);}) as Promise<null>, resolved: null};
 	}
 
-	const userRaw = getOrCreateUserFromId(client, uid, reason);
-	const user = (await userRaw).resolved;
-	if (!user) return {raw: userRaw, resolved: user};
+	const userRaw = await getOrCreateUserFromId(client, uid, reason);
+	const user = userRaw.resolved;
+	if (!user) return {raw: userRaw.raw, resolved: user};
 	const approvalReason = (user.approvedBy || (user.altOf + " (as alt)"))+" because of: "+user.reason;
 
 	if (Array.isArray(member.roles)) {
 		logError("An APIInteractionGuildMember or APIInteractionDataResolvedGuildMember of user " + uid + " was passed to getOrCreateUserAndSyncTrust (when processing "+reason+"), instead of a GuildMember. User was returned, but roles sync will not be performed -> consider using a simpler getOrCreateUserFromId instead.");
-		return {raw: userRaw, resolved: user};
+		return {raw: userRaw.raw, resolved: user};
 	}
 
 	if ((user.approvedBy || user.altOf) && user.reason) {
@@ -284,5 +284,5 @@ export async function getOrCreateUserAndSyncTrust(client: Bot, member: GuildMemb
 		}
 	}
 
-	return {raw: userRaw, resolved: user};
+	return {raw: userRaw.raw, resolved: user};
 }

@@ -31,7 +31,6 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 	await interaction.deferReply();
 	
 	try{
-		const users = client.db.users;
 		const sender  = (await getOrCreateUserAndSyncTrust(client, interaction.member, "TRUSTY_COMMAND")).resolved;
 		const target  = await interaction.guild?.members.fetch(interaction.options.getUser("komu", true));
 		const reason  = interaction.options.getString("ponieważ", true);
@@ -70,7 +69,7 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 			return;
 		}
 
-		await users.update({
+		await client.db.users.update({
 			where: { discordsnowflakeid: target.id },
 			data: {
 				reason: reason,
