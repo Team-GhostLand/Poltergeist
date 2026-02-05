@@ -47,7 +47,7 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 
 		const linked = await accounts.findUnique({ where: { mcuuid: uuid } });
 		console.log("awaited dupes");
-		const mcaccounts = await sender.raw.alts();
+		const mcaccounts = await sender.raw.mcaccounts();
 		console.log("awaited alts");
 
 		if (sender.resolved.altOf) {
