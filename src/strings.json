@@ -136,8 +136,8 @@
 	"trust_auto_command": "Bot automatycznie zaufał temu użytkownikowi, bo wykonał on jakąkolwiek komendę. Tylko @Zaufańcy mają permisje do komend, więc ten użytkownik jest zaufany; po prostu musi pochodzić ze starego systemu i nie było to jeszcze odnotowane w bazie danych. Either that, lub została na nim wykonana komenda dająca zaufanie (np. samo /zaufaj - chociaż wtedy ta auto-generowana wiadomość nie powinna się pojawić, a powód podany przy /ufaniu, więc też coś musiało pójść mildly wrong) lub jakaś administracyjna sugerująca zaufanie.",
 	"trust_auto_self": "Jezu, ufam Sobie ;-)",
 	
-	"trusted_role": "1468623538461216869",
-	"untrusted_role": "1467236642208219218",
-	"gl_trusted_role": "966398639809396847",
-	"gl_untrusted_role": "1261771958815686656"
+	"dev_trusted_role": "1468623538461216869",
+	"dev_untrusted_role": "1467236642208219218",
+	"trusted_role": "966398639809396847",
+	"untrusted_role": "1261771958815686656"
 }
