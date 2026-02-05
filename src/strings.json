@@ -86,7 +86,7 @@
     
 
     "dbfix_description": "Manualnie usuwa z bazy danych uszkodzone wpisy whitelisty.",
-    "dbfix_scheduled": "🔜 **Zaplanowano naprawę bazy danych na ASAP.**\n*Na przyszłość: Nie musisz tego robić manualnie, jeśli nie jest to strictly koniecznie - zadanie to jest na cron-jobie.*",
+    "dbfix_scheduled": "📨 **Zaplanowano naprawę bazy danych na ASAP.**\n*Na przyszłość: Nie musisz tego robić manualnie, jeśli nie jest to strictly koniecznie w danej chwili - zadanie to jest na cron-jobie co 15 minut.*",
     
 	
     "trustcmd_description": "Przyznaje rolę @Zaufaniec. Prosimy NIE używać tego na własnych alt-kontach - od tego jest /dodaj-alt",
