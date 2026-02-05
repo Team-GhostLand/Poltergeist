@@ -34,20 +34,23 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 
 	try {
 		const accounts = client.db.accounts;
-		const sender  = await getOrCreateUserAndSyncTrust(client, interaction.member, "TRUSTY_COMMAND");
+		const sender = await getOrCreateUserAndSyncTrust(client, interaction.member, "TRUSTY_COMMAND");
 		const nick = interaction.options.getString("nick", true);
 		const uuid = await loadMojangUUID(nick);
 		const reason = interaction.options.getString("powód_alta");
-		
+
 		if (!sender.resolved) {
 			logError(Strings.whitelist_log_no_sender);
 			await interaction.editReply({ content: Strings.whitelist_error_public });
 			return;
 		}
-		
+
 		const linked = await accounts.findUnique({ where: { mcuuid: uuid } });
+		console.log("awaited dupes");
 		const mcaccounts = await sender.raw.alts();
-		if (sender.resolved.altOf){
+		console.log("awaited alts");
+
+		if (sender.resolved.altOf) {
 			logError(Strings.whitelist_log_dcalt);
 			await interaction.editReply({ content: Strings.whitelist_error_dcalt });
 			return;
@@ -65,6 +68,8 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 			return;
 		}
 
+		console.log("Got all the way here!");
+
 		await client.db.whitelist.create({
 			data: {
 				whitelisted: 1,
@@ -72,6 +77,8 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 				uuid
 			}
 		});
+
+		console.log("...and beyond!!!");
 
 		await accounts.create({
 			data: {
@@ -81,6 +88,8 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 				altreason: reason
 			}
 		});
+
+		console.log("Probably not here, tho.");
 
 		logInfo(Strings.whitelist_log_success, interaction.user.displayName, nick, uuid);
 
