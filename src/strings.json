@@ -32,6 +32,8 @@
     "logs_error_fatal": "An unexpected error occurred and the bot has crashed. Check errors.txt file for more details.",
     "logs_error": "An unexpected error occurred! Check errors.txt file for more details.",
     
+	"logs_dbfix": "Pruning an account-less whitelist entry (UUID, Nick): ",
+    
     
     
     "whitelist_description": "Łączy konto Minecraft z kontem GhostLand i whitelistuje je.",
@@ -81,6 +83,10 @@
 
     "stop_description": "Bezpiecznie zatrzymuje bota.",
     "stop_stopping": "🛑 **Zatrzymano bota!**",
+    
+
+    "dbfix_description": "Manualnie usuwa z bazy danych uszkodzone wpisy whitelisty.",
+    "dbfix_scheduled": "🔜 **Zaplanowano naprawę bazy danych na ASAP.**\n*Na przyszłość: Nie musisz tego robić manualnie, jeśli nie jest to strictly koniecznie - zadanie to jest na cron-jobie.*",
     
 	
     "trustcmd_description": "Przyznaje rolę @Zaufaniec. Prosimy NIE używać tego na własnych alt-kontach - od tego jest /dodaj-alt",

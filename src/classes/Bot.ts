@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Client, Collection, GatewayIntentBits } from "discord.js";
+import { nodeCron as cron } from "node-cron";
 
 import CommandHandler from "./Handlers/CommandHandler.js";
 import ErrorHandler from "./Handlers/ErrorHandler.js";
@@ -8,6 +9,7 @@ import InteractionHandler from "./Handlers/InteractionHandler.js";
 
 import { logErrorMsg, logInfo } from "../functions/logger.js";
 import Strings from "../strings.json" with { type: "json" };
+import { dbFix } from "functions/utils.js";
 
 export default class Bot extends Client {
     commands: Collection<string, any>;
@@ -46,5 +48,9 @@ export default class Bot extends Client {
         catch (e) {
             logErrorMsg(e, Strings.logs_error_startup)
         }
+		
+		cron.schedule("*/15 * * * *", async () => {
+			dbFix(this);
+		});
     }
 }

@@ -278,3 +278,11 @@ export async function getOrCreateUserAndSyncTrust(client: Bot, member: GuildMemb
 
 	return {raw: userRaw.raw, resolved: user};
 }
+
+export async function dbFix(client: Bot) {
+	const brokenAccounts = await client.db.whitelist.findMany({ where: { account: null } });
+	for (const brokenAccount of brokenAccounts) {
+		logInfo(Strings.logs_dbfix + brokenAccount.uuid + brokenAccount.name);
+		await client.db.whitelist.delete({ where: { uuid: brokenAccount.uuid } });
+	};
+}
