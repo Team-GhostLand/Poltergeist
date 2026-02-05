@@ -46,9 +46,8 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 		}
 
 		const linked = await accounts.findUnique({ where: { mcuuid: uuid } });
-		console.log("awaited dupes");
-		const mcaccounts = await sender.raw.mcaccounts();
-		console.log("awaited alts");
+		let mcaccounts: any[]|null = null;
+		try{ mcaccounts = await sender.raw.mcaccounts(); } catch{} //This fails, for reasons unknown (likely some internal Prisma-object-lifecycle BS), if the user was just-created. However, if the user was just-created, then they obviously have no Minecraft accounts yet. So we just treat that error as „keep the original object as null” - no need to even catch{} it with any message, or anything. It's a normal, expected behavior.
 
 		if (sender.resolved.altOf) {
 			logError(Strings.whitelist_log_dcalt);
@@ -68,8 +67,6 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 			return;
 		}
 
-		console.log("Got all the way here!");
-
 		await client.db.whitelist.create({
 			data: {
 				whitelisted: 1,
@@ -77,8 +74,6 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 				uuid
 			}
 		});
-
-		console.log("...and beyond!!!");
 
 		await accounts.create({
 			data: {
@@ -88,8 +83,6 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 				altreason: reason
 			}
 		});
-
-		console.log("Probably not here, tho.");
 
 		logInfo(Strings.whitelist_log_success, interaction.user.displayName, nick, uuid);
 
