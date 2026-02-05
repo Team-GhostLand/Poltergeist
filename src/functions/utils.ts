@@ -247,6 +247,8 @@ export async function getOrCreateUserFromId(client: Bot, id: string, reason: "JO
 export async function getOrCreateUserAndSyncTrust(client: Bot, member: GuildMember|APIInteractionGuildMember|APIInteractionDataResolvedGuildMember|null|undefined, reason: "JOIN_EVENT"|"TRUSTY_COMMAND"|"NORMAL_COMMAND"|"DANGLING_INVITER"|"BOT_ITSELF") {
 	const uid = !member ? null : ("id" in member ? member.id : ( "user" in member ? member.user.id : null));
 	
+	console.log("getOrCreateUserAndSyncTrust was called with reason "+reason+" for user ID "+uid);
+	
 	if (!uid || !member) {
 		let nick = (member as APIInteractionGuildMember|APIInteractionDataResolvedGuildMember|null|undefined)?.nick
 		if (!nick) nick = "nor even a nickname, for that matter - so there is no way to even debug whose weird-ass privacy settings caused this"; 
@@ -263,6 +265,8 @@ export async function getOrCreateUserAndSyncTrust(client: Bot, member: GuildMemb
 		logError("An APIInteractionGuildMember or APIInteractionDataResolvedGuildMember of user " + uid + " was passed to getOrCreateUserAndSyncTrust (when processing "+reason+"), instead of a GuildMember. User was returned, but roles sync will not be performed -> consider using a simpler getOrCreateUserFromId instead.");
 		return {raw: userRaw.raw, resolved: user};
 	}
+
+	console.log(user.approvedBy, user.altOf, user.reason, (user.approvedBy || user.altOf), ((user.approvedBy || user.altOf) && user.reason));
 
 	if ((user.approvedBy || user.altOf) && user.reason) {
 		if (!member.roles.cache.has(Strings.trusted_role)) {
