@@ -16,11 +16,11 @@ model whitelist {
 }
 
 model users {
-    discordsnowflakeid  String @id //varchar(25)
-	altOf String? //varchar(25)
-	invitedBy String //varchar(25)
-	approvedBy String? //varchar(25)
-	reason String?
+    discordsnowflakeid  String @id //varchar(191)
+	altOf String? //varchar(191)
+	invitedBy String //varchar(191)
+	approvedBy String? //varchar(191)
+	reason String? //varchar(512)
 
     mcaccounts accounts[] @relation("accounts_to_user")
 	main users? @relation("alts_to_main", fields:[altOf], references:[discordsnowflakeid])
@@ -32,10 +32,10 @@ model users {
 }
 
 model accounts {
-    owner  String //varchar(25)
+    owner  String //varchar(191)
     mcuuid String @unique //varchar(60)
-	altreason String?
-	playtime String
+	altreason String? //varchar(512)
+	playtime String //varchar(512)
     
     mcuser whitelist  @relation("whitelisting", fields:[mcuuid], references: [uuid])
     user   users      @relation("accounts_to_user", fields:[owner], references: [discordsnowflakeid])

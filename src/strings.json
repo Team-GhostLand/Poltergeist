@@ -133,7 +133,7 @@
 
 
 	"trust_auto_dangling_inviter": "Bot automatycznie zaufał temu użytkownikowi, bo zaprosił on wcześniej kogoś. Tylko @Zaufańcy mają permisje do zapraszania, więc ten użytkownik jest zaufany; po prostu musi pochodzić ze starego systemu i nie było to jeszcze odnotowane w bazie danych.",
-	"trust_auto_command": "Bot automatycznie zaufał temu użytkownikowi, bo wykonał on jakąkolwiek komendę. Tylko @Zaufańcy mają permisje do komend, więc ten użytkownik jest zaufany; po prostu musi pochodzić ze starego systemu i nie było to jeszcze odnotowane w bazie danych. Either that, lub została na nim wykonana komenda dająca zaufanie (np. samo /zaufaj - chociaż wtedy ta auto-generowana wiadomość nie powinna się pojawić, a powód podany przy /ufaniu, więc też coś musiało pójść mildly wrong) lub jakaś administracyjna sugerująca zaufanie.",
+	"trust_auto_command": "Bot automatycznie zaufał temu użytkownikowi, bo wykonał on jakąkolwiek komendę. Tylko @Zaufańcy mają permisje do komend, więc ten użytkownik jest zaufany; po prostu musi pochodzić ze starego systemu i nie było to jeszcze odnotowane w bazie danych. Either that, lub została na nim wykonana komenda dająca zaufanie (np. samo /zaufaj - chociaż wtedy ta auto-generowana wiadomość nie powinna się pojawić, więc też coś musiało pójść mildly wrong) lub jakaś administracyjna sugerująca zaufanie.",
 	"trust_auto_self": "Jezu, ufam Sobie ;-)",
 	
 	"dev_trusted_role": "1468623538461216869",
