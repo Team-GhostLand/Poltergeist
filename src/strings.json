@@ -34,6 +34,9 @@
     
 	"logs_dbfix": "Pruning an account-less whitelist entry (UUID, Nick): ",
     
+	"logs_misplaced_file_in_stats": "Found something in data/statsdir, that shouldn't be there: ",
+	"logs_stat_parse_error": "Error while parsing a stat file:",
+    
     
     
     "whitelist_description": "Łączy konto Minecraft z kontem GhostLand i whitelistuje je.",
