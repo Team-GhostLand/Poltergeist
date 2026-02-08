@@ -42,5 +42,4 @@ COPY --from=prerelease /usr/src/app/prisma prisma
 
 # run the app
 RUN chmod -R 777 .
-USER bun
 ENTRYPOINT [ "sh", "./dockerstart.sh" ]
