@@ -285,3 +285,12 @@ export async function dbFix(client: Bot) {
 		await client.db.whitelist.delete({ where: { uuid: brokenAccount.uuid } });
 	};
 }
+
+export function preciseRound(num: number, to: number): number{
+	const mul = Math.pow(10, to);
+	return(Math.round(num * mul) / mul);
+}
+
+export function isEmpty(obj: any): boolean{
+	return Object.keys(obj).length === 0 && obj.constructor === Object; //From: https://www.freecodecamp.org/news/check-if-an-object-is-empty-in-javascript/
+}
