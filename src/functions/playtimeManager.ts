@@ -114,8 +114,7 @@ export async function updatePlaytimes(client: Bot) {
 		let oldPlaytime = {};
 		try { oldPlaytime = JSON.parse(account.playtime) } catch {} //No need for specific catch logic - if JSON was invalid, we treat it like it wasn't even there.
 		
-		const mergedPlaytime = mergePlaytimes(oldPlaytime, newPlaytime)
-		if (mergedPlaytime.c !== (oldPlaytime as globalPlaytime).c) logInfo(Strings.logs_dbfix_playtime, account.mcuuid);
+		const mergedPlaytime = mergePlaytimes(oldPlaytime, newPlaytime);
 		await client.db.accounts.update({
 			where: { mcuuid: account.mcuuid },
 			data: { playtime: JSON.stringify(mergedPlaytime) }
