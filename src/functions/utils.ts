@@ -286,7 +286,7 @@ export async function dbFix(client: Bot) {
 		await client.db.whitelist.delete({ where: { uuid: brokenAccount.uuid } });
 	};
 
-	updatePlaytimes(client);
+	await updatePlaytimes(client);
 }
 
 export function preciseRound(num: number, to: number): number{
