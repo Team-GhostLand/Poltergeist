@@ -107,9 +107,9 @@ export function mergePlaytimes(src: globalPlaytime|{}, add: worldPlaytime): glob
 export async function updatePlaytimes(client: Bot) {
 	const accounts = await client.db.accounts.findMany({ where: {} });
 	const playtimes = getProcessedPlaytimes(getRawPlaytimes());
-	console.log("processing", accounts.length, "accounts");
 	for (const account of accounts) {
 		const newPlaytime = playtimes.get(account.mcuuid);
+		console.log("processing", account.mcuuid, "whose playtime is", newPlaytime, "according to", playtimes);
 		if (!newPlaytime) continue;
 		let oldPlaytime = {};
 		try { oldPlaytime = JSON.parse(account.playtime) } catch {} //No need for specific catch logic - if JSON was invalid, we treat it like it wasn't even there.
