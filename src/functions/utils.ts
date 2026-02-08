@@ -22,6 +22,7 @@ import { logError, logErrorMsg, logInfo } from "./logger.js";
 
 import { mainCodeDir } from "index.js";
 import Strings from "../strings.json" with { type: "json" };
+import { updatePlaytimes } from "./playtimeManager.js";
 
 export async function findGuild(
 	id: Snowflake,
@@ -281,9 +282,11 @@ export async function getOrCreateUserAndSyncTrust(client: Bot, member: GuildMemb
 export async function dbFix(client: Bot) {
 	const brokenAccounts = await client.db.whitelist.findMany({ where: { account: null } });
 	for (const brokenAccount of brokenAccounts) {
-		logInfo(Strings.logs_dbfix + brokenAccount.uuid + " " + brokenAccount.name);
+		logInfo(Strings.logs_dbfix_prune, brokenAccount.uuid, brokenAccount.name);
 		await client.db.whitelist.delete({ where: { uuid: brokenAccount.uuid } });
 	};
+
+	updatePlaytimes(client);
 }
 
 export function preciseRound(num: number, to: number): number{

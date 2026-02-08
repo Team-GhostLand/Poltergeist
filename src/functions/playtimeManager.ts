@@ -1,9 +1,10 @@
+import Bot from "classes/Bot.js";
 import { Collection } from "discord.js";
 import { lstatSync, readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import { mainCodeDir } from "../index.js";
 import Strings from "../strings.json" with { type: "json" };
-import { logError, logErrorMsg } from "./logger.js";
+import { logError, logErrorMsg, logInfo } from "./logger.js";
 import { isEmpty, preciseRound } from "./utils.js";
 
 type worldPlaytime = { w/*world*/: string, t/*time (min)*/: number }[] //Compacted to singular chars to save space in DB (as I found out the hard way, 512chr ain't much)
@@ -101,4 +102,20 @@ export function mergePlaytimes(src: globalPlaytime|{}, add: worldPlaytime): glob
 	}
 
 	return output;
+}
+
+export async function updatePlaytimes(client: Bot) {
+	const accounts = await client.db.accounts.findMany({ where: {} });
+	const playtimes = getProcessedPlaytimes(getRawPlaytimes());
+	for (const account of accounts) {
+		const newPlaytime = playtimes.get(account.mcuuid);
+		if (!newPlaytime) continue;
+		let oldPlaytime = {};
+		try { oldPlaytime = JSON.parse(account.playtime) } catch {} //No need for specific catch logic - if JSON was invalid, we treat it like it wasn't even there.
+		logInfo(Strings.logs_dbfix_playtime, account.mcuuid);
+		client.db.accounts.update({
+			where: { mcuuid: account.mcuuid },
+			data: { playtime: JSON.stringify(mergePlaytimes(oldPlaytime, newPlaytime)) }
+		});
+	}
 }

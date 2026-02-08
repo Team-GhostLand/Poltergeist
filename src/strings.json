@@ -32,7 +32,8 @@
     "logs_error_fatal": "An unexpected error occurred and the bot has crashed. Check errors.txt file for more details.",
     "logs_error": "An unexpected error occurred! Check errors.txt file for more details.",
     
-	"logs_dbfix": "Pruning an account-less whitelist entry (UUID, Nick): ",
+	"logs_dbfix_prune": "Pruning an account-less whitelist entry (UUID, Nick):",
+	"logs_dbfix_playtime": "Creating playtimes for UUID:",
     
 	"logs_misplaced_file_in_stats": "Found something in data/statsdir, that shouldn't be there: ",
 	"logs_stat_parse_error": "Error while parsing a stat file:",
@@ -89,7 +90,7 @@
     "stop_stopping": "🛑 **Zatrzymano bota!**",
     
 
-    "dbfix_description": "Manualnie usuwa z bazy danych uszkodzone wpisy whitelisty.",
+    "dbfix_description": "Manualnie usuwa z bazy danych uszkodzone wpisy whitelisty oraz synchronizuje playtimes.",
     "dbfix_scheduled": "📨 **Zaplanowano naprawę bazy danych na ASAP.**\n*Na przyszłość: Nie musisz tego robić manualnie, jeśli nie jest to strictly koniecznie w danej chwili - zadanie to jest na cron-jobie co 15 minut.*",
     
 	
