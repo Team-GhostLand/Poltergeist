@@ -33,7 +33,7 @@
     "logs_error": "An unexpected error occurred! Check errors.txt file for more details.",
     
 	"logs_dbfix_prune": "Pruning an account-less whitelist entry (UUID, Nick):",
-	"logs_dbfix_playtime": "Creating playtimes for UUID:",
+	"logs_dbfix_playtime": "Updating playtimes for",
     
 	"logs_misplaced_file_in_stats": "Found something in data/statsdir, that shouldn't be there: ",
 	"logs_stat_parse_error": "Error while parsing a stat file:",
