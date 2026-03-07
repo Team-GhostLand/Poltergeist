@@ -14,7 +14,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"prisma.prisma"
+				"prisma.prisma",
+				"qwtel.sqlite-viewer"
 			]
 		}
 	},
