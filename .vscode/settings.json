@@ -41,6 +41,7 @@
 		"randomem",
 		"randomy",
 		"statdirs",
+		"statsdir",
 		"tinyint",
 		"toomanyalts",
 		"trustcmd",

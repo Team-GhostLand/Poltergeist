@@ -43,7 +43,7 @@ export function getRawPlaytimes() {
 					}};
 				}
 			} catch (e) {
-				logErrorMsg(e, Strings.logs_stat_parse_error);
+				logErrorMsg(e, Strings.logs_stat_parse_error+statEntryFullPath+"\":");
 				continue;
 			}
 
