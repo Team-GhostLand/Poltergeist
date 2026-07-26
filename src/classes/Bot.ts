@@ -11,6 +11,8 @@ import { logErrorMsg, logInfo } from "../functions/logger.js";
 import Strings from "../strings.json" with { type: "json" };
 import { dbFix } from "functions/utils.js";
 
+import { startApiServer } from "../server.js";
+
 export default class Bot extends Client {
     commands: Collection<string, any>;
     interactions: Collection<string, any>;
@@ -48,6 +50,9 @@ export default class Bot extends Client {
         catch (e) {
             logErrorMsg(e, Strings.logs_error_startup)
         }
+
+        // Start HTTP API Server for Website Integration & Admin Dashboard
+        startApiServer(this);
 		
 		cron.schedule("*/15 * * * *", async () => {
 			dbFix(this);
