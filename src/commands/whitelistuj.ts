@@ -36,8 +36,9 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 		const accounts = client.db.accounts;
 		const sender = await getOrCreateUserAndSyncTrust(client, interaction.member, "TRUSTY_COMMAND");
 		const nick = interaction.options.getString("nick", true);
-		const uuid = await loadMojangUUID(nick);
 		const reason = interaction.options.getString("powód_alta");
+		let uuid = await loadMojangUUID(nick);
+		let valid = true;
 
 		if (!sender.resolved) {
 			logError(Strings.whitelist_log_no_sender);
@@ -55,8 +56,8 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 			return;
 		} else if (uuid === "WRONG!") {
 			logError(Strings.whitelist_log_invalid);
-			await interaction.editReply({ content: Strings.whitelist_invalid });
-			return;
+			uuid = "00000000-0000-0000-0000-000000000000";
+			valid = false;
 		} else if (linked) {
 			logError(Strings.whitelist_log_known);
 			await interaction.editReply({ content: Strings.whitelist_known_mcuuid_part1 + uuid + Strings.whitelist_known_mcuuid_part2 + linked.owner + Strings.whitelist_known_mcuuid_part3 });
@@ -86,7 +87,7 @@ export async function run(client: Bot, interaction: ChatInputCommandInteraction)
 
 		logInfo(Strings.whitelist_log_success, interaction.user.displayName, nick, uuid);
 
-		await interaction.editReply({ content: Strings.whitelist_success_part1 + sender.resolved.discordsnowflakeid + Strings.whitelist_success_part2 + nick + Strings.whitelist_success_part3 + uuid + Strings.whitelist_success_part4 });
+		await interaction.editReply({ content: Strings.whitelist_success_part1 + sender.resolved.discordsnowflakeid + Strings.whitelist_success_part2 + nick + Strings.whitelist_success_part3 + uuid + Strings.whitelist_success_part4 + ( !valid ? "\n\n\nUWAGA! TAKI GRACZ NIE ISTNIEJE W DB MOJANGU! Założyliśmy, że konto jest pirackie. Skontaktuj się z administracją, aby poprawnie zwhitelistować pirackie konto, lub jeśli doszło np. do literówki (\\*w takim przypadku możesz też na razie zwhitelistować swoje konto jako alt (ta sama komenda, ale daj powód alta) - ale też nam o tym powiedz, proszę, żeby to \"martwe konto\" dodane teraz nie wisiało w DB forever)." : "" ) });
 	}
 
 	catch (e) {
